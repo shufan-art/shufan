@@ -151,6 +151,55 @@ def build_questions(theme):
     return questions
 
 
+def build_love_questions():
+    rows = [
+        ["你刚认识一个有好感的人，最先被什么打动？", "对方对我特别上心", "对方的气味、声音或外形很吸引我", "相处舒服，不用刻意表现", "对方给我稳定回应"],
+        ["你会在什么情况下开始反复想一个人？", "他一点点冷淡，我就开始不安", "见过面后身体记住了那种感觉", "聊天很顺，价值观也接近", "他让我觉得自己被认真对待"],
+        ["如果对方突然不回消息，你更可能怎么想？", "是不是我哪里做错了", "会有点想念，但更多是被吊起欲望", "先观察，不急着下结论", "会在意他是不是还可靠"],
+        ["你最容易把哪种感觉当成喜欢？", "想一直确认他爱不爱我", "心跳快、上头、想靠近", "相处自然，有共同语言", "被照顾、被保护、很安心"],
+        ["你在暧昧期最受不了什么？", "忽冷忽热", "没有身体张力", "聊不到一起", "承诺不清楚"],
+        ["你更容易因为哪句话心软？", "我只对你这样", "我很想见你", "我懂你的想法", "我会一直在"],
+        ["如果一个人很帅但不稳定，你会？", "容易陷进去，想证明自己特别", "很容易被吸引，先享受当下", "会喜欢，但不会立刻交出自己", "会退后，因为我需要确定感"],
+        ["如果一个人条件普通但很稳定，你会？", "如果他很爱我，我会慢慢依赖", "可能不够上头", "看相处质量，不急着否定", "会很加分，稳定让我安心"],
+        ["你最常在感情里犯的错是？", "把对方看得太重", "把心动当长期合适", "想太多，启动太慢", "太需要确定答案"],
+        ["你最容易被哪种人吸引？", "会给我强烈情绪波动的人", "有性张力、有魅力的人", "成熟、有边界、聊得来的人", "温柔稳定、愿意陪我的人"],
+        ["你确认喜欢一个人时，身体反应重要吗？", "重要，但我更在意他爱不爱我", "非常重要，没有反应就很难喜欢", "重要，但不是唯一标准", "有就更好，没有也会看安全感"],
+        ["你会因为一个人对你好而喜欢他吗？", "很容易，我会被偏爱打动", "不一定，没吸引力就不行", "可能会，但要看是否真的合拍", "会，稳定的好对我很重要"],
+        ["你在关系里最想要什么？", "被坚定选择", "强烈心动和亲密感", "互相理解、共同成长", "稳定陪伴和安全感"],
+        ["暧昧最上头的瞬间是什么？", "他突然只对我特殊", "靠近、对视、触碰的瞬间", "发现我们很同频", "他认真回应我的需求"],
+        ["你更害怕哪种结局？", "我很爱，但他没那么爱", "热度过了就没感觉", "判断错人浪费时间", "关系不稳定让我消耗"],
+        ["朋友说你恋爱脑，你的反应是？", "可能吧，我真的容易陷进去", "我只是容易被吸引，不一定想长期", "我其实很清醒，只是慢热", "我不是恋爱脑，我只是需要安全感"],
+        ["你会偷偷研究对方的动态吗？", "会，而且越看越在意", "会看，但更多是确认吸引感", "偶尔看，不会影响节奏", "会看他是否稳定一致"],
+        ["如果对方很会撩，你会？", "很容易当真", "很容易被点燃", "会心动，但会看行动", "会开心，但也会看是否靠谱"],
+        ["你更相信哪种喜欢？", "离不开、放不下、很在乎", "身体诚实，见面就知道", "舒服自然，越相处越确定", "稳定踏实，不用猜来猜去"],
+        ["你会因为孤独进入一段关系吗？", "有可能，我怕没人陪", "如果有吸引力，可能会试试", "不太会，我需要确认合适", "会心动于陪伴，但会看稳定性"],
+        ["你最需要提醒自己的是？", "不要把全部情绪交给一个人", "不要把上头误认为真爱", "不要因为太清醒错过感受", "不要用控制换安全感"],
+        ["对方哪种行为最让你加分？", "公开偏爱我", "见面有强烈吸引和默契", "尊重我的节奏和想法", "说到做到，稳定出现"],
+        ["你分不清喜欢时，通常是因为？", "情绪太满，看不清自己", "身体很想靠近，但心里不确定", "理性和感性在打架", "太想要安全感，容易误判"],
+        ["你最容易沉迷哪种关系？", "忽冷忽热但偶尔很甜", "暧昧刺激但不确定", "慢慢了解、越聊越深", "被照顾、被惦记、被保护"],
+        ["如果只选一个，你更想要？", "被爱得很明显", "心动得很强烈", "相处得很舒服", "关系很稳定"],
+        ["你会把对方幻想得很完美吗？", "会，我容易自动加滤镜", "会被吸引力放大优点", "不太会，我会看真实相处", "会，但我更看他能不能给安全感"],
+        ["在喜欢的人面前，你最像哪一种？", "容易患得患失", "容易害羞但很想靠近", "表面淡定，心里观察", "想确认关系是否可靠"],
+        ["你更容易在哪个阶段上头？", "对方开始冷下来时", "第一次见面或亲密互动后", "深入聊天之后", "对方持续稳定对我好之后"],
+        ["你判断一个人适不适合长期，最看重？", "他是不是足够爱我", "吸引力能不能持续", "三观、沟通和边界", "责任感和稳定性"],
+        ["做完这个测试，你最想知道什么？", "我是不是太恋爱脑了", "我是不是只是生理性喜欢", "我到底适合哪种关系", "我为什么总需要安全感"],
+    ]
+    questions = []
+    for row in rows:
+        questions.append(
+            {
+                "text": row[0],
+                "options": [
+                    {"text": row[1], "type": "A"},
+                    {"text": row[2], "type": "B"},
+                    {"text": row[3], "type": "C"},
+                    {"text": row[4], "type": "D"},
+                ],
+            }
+        )
+    return questions
+
+
 def build_results(theme):
     return {
         "A": {
@@ -192,12 +241,72 @@ def build_results(theme):
     }
 
 
+def build_love_results(theme):
+    return {
+        "A": {
+            "name": "恋爱脑投入型",
+            "summary": "你不是不会爱，而是太容易把一个人放到情绪中心。",
+            "sections": [
+                "你一旦喜欢上一个人，就很容易把注意力、期待和安全感都放到对方身上。对方一句话、一个眼神、一次回复速度，都可能影响你一整天的状态。",
+                "你的可贵之处是很真诚，也很有投入感。你不是随便喜欢，你只是太渴望被坚定选择，所以会把一点点偏爱看得很重。",
+                "你需要提醒自己：真正适合你的关系，不应该让你一直猜、一直等、一直证明自己值得被爱。未来 7 天，试着把注意力收回一点，先问自己舒服不舒服。",
+            ],
+        },
+        "B": {
+            "name": "生理性喜欢上头型",
+            "summary": "你很容易被吸引力点燃，但这不一定等于长期适合。",
+            "sections": [
+                "你对气味、声音、外形、氛围和亲密张力很敏感。一个人如果刚好踩中你的身体偏好，你会很快产生想靠近、想见面、想继续探索的冲动。",
+                "你的优势是感受力很强，不会骗自己。你能很快判断一个人有没有吸引力，这种直觉在关系里很重要。",
+                "你需要区分：心动是真的，但心动不等于承诺；上头是真的，但上头不等于合适。未来 7 天，如果你很想靠近一个人，也请同时观察他的稳定性和尊重感。",
+            ],
+        },
+        "C": {
+            "name": "清醒慢热型",
+            "summary": "你不是不心动，只是比起上头，你更需要确认这个人值不值得。",
+            "sections": [
+                "你对关系有自己的判断标准，不会因为一点暧昧就立刻交出全部。你可能会心动，但你会一边感受，一边观察对方的边界、沟通和长期适配度。",
+                "你的优势是清醒、有分寸，也更不容易被短期情绪带走。你适合慢慢相处，在稳定互动中确认喜欢。",
+                "你的卡点是有时太理性，容易错过真实的感受。未来 7 天，除了问这个人合不合适，也问问自己：和他在一起时，我有没有变得更松弛？",
+            ],
+        },
+        "D": {
+            "name": "安全感依恋型",
+            "summary": "你最在意的不是刺激，而是对方能不能稳定地把你放在心上。",
+            "sections": [
+                "你在关系里很看重回应、承诺和一致性。比起忽冷忽热的刺激，你更容易被一个人长期、稳定、温柔的行动打动。",
+                "你的优势是适合经营长期关系，也懂得珍惜真正对你好的人。你要的不是轰轰烈烈，而是不用每天猜对方到底在不在乎。",
+                "你需要注意的是，不要因为太想要安全感，就把控制、确认和反复试探当作爱。未来 7 天，试着观察一个人的行动，而不是只盯着一句话。",
+            ],
+        },
+    }
+
+
+def is_love_theme(theme):
+    return any(word in theme for word in ["恋爱", "喜欢", "生理性", "暧昧", "关系", "心动"])
+
+
 def build_config(theme):
+    if is_love_theme(theme):
+        return {
+            "theme": theme,
+            "title": theme,
+            "subtitle": "30 道题，看清你的心动到底是哪一种",
+            "price_hint": "娱乐测试，仅供情感自我探索参考",
+            "intro": "这个测试会通过 30 个选择题，帮你分辨自己更接近恋爱脑、生理性喜欢、清醒慢热，还是安全感依恋。",
+            "style": "pink",
+            "share_line": "喜欢一个人不难，难的是看清自己到底在被什么吸引。",
+            "questions": build_love_questions(),
+            "results": build_love_results(theme),
+        }
     return {
         "theme": theme,
         "title": theme,
         "subtitle": "16 道题，看见你的隐藏倾向和下一步方向",
         "price_hint": "娱乐测试，仅供自我探索参考",
+        "intro": "这个测试会通过 16 个选择题，帮你看见自己更接近哪一种状态。",
+        "style": "warm",
+        "share_line": "你不是没有答案，只是需要一个更适合自己的方向。",
         "questions": build_questions(theme),
         "results": build_results(theme),
     }
@@ -208,7 +317,47 @@ def render_html(config):
     title = html.escape(config["title"])
     subtitle = html.escape(config["subtitle"])
     price_hint = html.escape(config["price_hint"])
+    intro = html.escape(config.get("intro", f"这个测试会通过 {len(config['questions'])} 个选择题，帮你看见自己更接近哪一种状态。"))
+    share_line = html.escape(config.get("share_line", "你不是没有答案，只是需要一个更适合自己的方向。"))
     generated_at = datetime.now().strftime("%Y-%m-%d %H:%M")
+    if config.get("style") == "pink":
+        colors = {
+            "text": "#34232b",
+            "bg": "linear-gradient(180deg, #fff5f8 0%, #fffafd 48%, #fff3f6 100%)",
+            "tag_bg": "#ffe1ec",
+            "tag_text": "#a93562",
+            "sub": "#765866",
+            "panel_border": "#f3cddd",
+            "panel_shadow": "0 12px 34px rgba(185, 82, 124, 0.12)",
+            "notice": "#946476",
+            "progress": "#f9dce8",
+            "primary": "#d94f86",
+            "secondary": "#f7dde8",
+            "secondary_text": "#7d3956",
+            "option_bg": "#fff9fb",
+            "option_hover": "#fff0f6",
+            "result": "#8f315b",
+            "share_bg": "#fff0f6",
+        }
+    else:
+        colors = {
+            "text": "#2b211d",
+            "bg": "#fff8f2",
+            "tag_bg": "#ffe2cc",
+            "tag_text": "#8a3d12",
+            "sub": "#6d5a50",
+            "panel_border": "#f0d8c7",
+            "panel_shadow": "0 8px 24px rgba(112, 65, 32, 0.08)",
+            "notice": "#85624e",
+            "progress": "#f6e6db",
+            "primary": "#dc6b2f",
+            "secondary": "#f4e5d9",
+            "secondary_text": "#5b3a27",
+            "option_bg": "#fffaf6",
+            "option_hover": "#fff1e6",
+            "result": "#6d4a36",
+            "share_bg": "#fff3e9",
+        }
 
     return f"""<!doctype html>
 <html lang="zh-CN">
@@ -221,8 +370,8 @@ def render_html(config):
     body {{
       margin: 0;
       font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", sans-serif;
-      color: #2b211d;
-      background: #fff8f2;
+      color: {colors["text"]};
+      background: {colors["bg"]};
       line-height: 1.7;
     }}
     .page {{
@@ -237,8 +386,8 @@ def render_html(config):
       display: inline-block;
       padding: 4px 10px;
       border-radius: 999px;
-      background: #ffe2cc;
-      color: #8a3d12;
+      background: {colors["tag_bg"]};
+      color: {colors["tag_text"]};
       font-size: 13px;
       margin-bottom: 14px;
     }}
@@ -250,24 +399,24 @@ def render_html(config):
     }}
     .subtitle {{
       margin: 12px 0 0;
-      color: #6d5a50;
+      color: {colors["sub"]};
       font-size: 16px;
     }}
     .panel {{
       background: #fff;
-      border: 1px solid #f0d8c7;
+      border: 1px solid {colors["panel_border"]};
       border-radius: 8px;
       padding: 18px;
-      box-shadow: 0 8px 24px rgba(112, 65, 32, 0.08);
+      box-shadow: {colors["panel_shadow"]};
     }}
     .notice {{
       margin: 14px 0 0;
-      color: #85624e;
+      color: {colors["notice"]};
       font-size: 13px;
     }}
     .progress {{
       height: 8px;
-      background: #f6e6db;
+      background: {colors["progress"]};
       border-radius: 999px;
       overflow: hidden;
       margin: 18px 0;
@@ -275,11 +424,11 @@ def render_html(config):
     .bar {{
       height: 100%;
       width: 0;
-      background: #dc6b2f;
+      background: {colors["primary"]};
       transition: width .25s ease;
     }}
     .question-count {{
-      color: #8a6a58;
+      color: {colors["notice"]};
       font-size: 14px;
       margin-bottom: 8px;
     }}
@@ -291,9 +440,9 @@ def render_html(config):
     .option {{
       width: 100%;
       text-align: left;
-      border: 1px solid #eed6c5;
-      background: #fffaf6;
-      color: #2b211d;
+      border: 1px solid {colors["panel_border"]};
+      background: {colors["option_bg"]};
+      color: {colors["text"]};
       padding: 14px 14px;
       border-radius: 8px;
       margin: 10px 0;
@@ -301,8 +450,8 @@ def render_html(config):
       cursor: pointer;
     }}
     .option:hover {{
-      border-color: #dc6b2f;
-      background: #fff1e6;
+      border-color: {colors["primary"]};
+      background: {colors["option_hover"]};
     }}
     .actions {{
       display: flex;
@@ -317,13 +466,13 @@ def render_html(config):
       cursor: pointer;
     }}
     .primary {{
-      background: #dc6b2f;
+      background: {colors["primary"]};
       color: white;
       width: 100%;
     }}
     .secondary {{
-      background: #f4e5d9;
-      color: #5b3a27;
+      background: {colors["secondary"]};
+      color: {colors["secondary_text"]};
     }}
     .result-title {{
       font-size: 24px;
@@ -331,18 +480,18 @@ def render_html(config):
       margin: 4px 0 8px;
     }}
     .result-summary {{
-      color: #6d4a36;
+      color: {colors["result"]};
       font-weight: 700;
       margin-bottom: 16px;
     }}
     .result-section {{
-      border-top: 1px solid #f1ded0;
+      border-top: 1px solid {colors["panel_border"]};
       padding-top: 14px;
       margin-top: 14px;
     }}
     .share {{
-      background: #fff3e9;
-      border-left: 4px solid #dc6b2f;
+      background: {colors["share_bg"]};
+      border-left: 4px solid {colors["primary"]};
       padding: 12px;
       border-radius: 6px;
       margin-top: 18px;
@@ -350,7 +499,7 @@ def render_html(config):
     .hidden {{ display: none; }}
     .footer {{
       text-align: center;
-      color: #9a8171;
+      color: {colors["notice"]};
       font-size: 12px;
       margin-top: 20px;
     }}
@@ -366,7 +515,7 @@ def render_html(config):
     </section>
 
     <section id="start" class="panel">
-      <p>这个测试会通过 16 个选择题，帮你看见自己更接近哪一种状态。</p>
+      <p>{intro}</p>
       <p>不用纠结标准答案，凭第一感觉选就好。</p>
       <button class="primary" onclick="startTest()">开始测试</button>
     </section>
@@ -445,7 +594,7 @@ def render_html(config):
         <div class="result-title">${{result.name}}</div>
         <div class="result-summary">${{result.summary}}</div>
         ${{result.sections.map(section => `<div class="result-section">${{section}}</div>`).join("")}}
-        <div class="share">适合截图分享的一句话：你不是没有答案，只是需要一个更适合自己的方向。</div>
+        <div class="share">适合截图分享的一句话：{share_line}</div>
         <div class="actions">
           <button class="primary" onclick="startTest()">重新测试</button>
         </div>
