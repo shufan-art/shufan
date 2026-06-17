@@ -53,7 +53,7 @@ def build_homepage(published):
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>熊慧玲的自我探索测试</title>
+  <title>自我探索测试</title>
   <style>
     * {{ box-sizing: border-box; }}
     body {{
@@ -113,7 +113,7 @@ def build_homepage(published):
 </head>
 <body>
   <main>
-    <h1>熊慧玲的自我探索测试</h1>
+    <h1>自我探索测试</h1>
     <p class="intro">选择一个测试，换个角度理解自己。测试仅供娱乐和自我探索参考。</p>
     <section class="grid">
       {links}
@@ -140,4 +140,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-

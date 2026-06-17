@@ -359,7 +359,7 @@ def render_html(config):
 <body>
   <main class="page">
     <section class="hero">
-      <span class="tag">熊慧玲的自我探索测试</span>
+      <span class="tag">自我探索测试</span>
       <h1>{title}</h1>
       <p class="subtitle">{subtitle}</p>
       <p class="notice">{price_hint}</p>
@@ -482,4 +482,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-
