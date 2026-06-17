@@ -3,6 +3,7 @@ cd "$(dirname "$0")"
 
 echo "准备推送到 GitHub..."
 echo "当前目录：$(pwd)"
+echo "目标仓库：https://github.com/shufan-art/shufan.git"
 echo ""
 
 git status --short --branch
