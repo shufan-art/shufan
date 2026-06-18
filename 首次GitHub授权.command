@@ -18,6 +18,18 @@ if [ -z "$username" ]; then
   username="shufan-art"
 fi
 
+if [[ "$username" == ghp_* || "$username" == github_pat_* ]]; then
+  echo ""
+  echo "你把 Token 粘到了用户名这里。"
+  echo "请关闭窗口，重新运行本脚本。"
+  echo "用户名这里应该填：shufan-art"
+  echo "Token 要粘贴到下一步的 Token 输入框。"
+  echo ""
+  echo "按回车键关闭窗口。"
+  read
+  exit 1
+fi
+
 echo ""
 echo "请粘贴 GitHub Token。粘贴时屏幕不会显示，这是正常的。"
 printf "Token："
