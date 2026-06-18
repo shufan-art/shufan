@@ -403,7 +403,7 @@ def build_config(theme):
         return {
             "theme": theme,
             "eyebrow": "LIFE PACE CHECK",
-            "title": "你是米氏盒躺平，还是内卷？",
+            "title": "你适合躺平，还是内卷？",
             "subtitle": "24 道题，看清你现在真正需要的生活节奏",
             "subtitle_lines": [
                 "不是每一次想躺平，都是不上进。",

@@ -18,6 +18,8 @@ def find_tests():
     for folder in sorted(OUTPUT_DIR.iterdir()):
         index_file = folder / "index.html"
         config_file = folder / "test_config.json"
+        if "米氏盒" in folder.name:
+            continue
         if folder.is_dir() and index_file.exists() and config_file.exists():
             tests.append(folder)
     return tests
