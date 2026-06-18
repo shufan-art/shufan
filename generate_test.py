@@ -290,11 +290,23 @@ def build_config(theme):
     if is_love_theme(theme):
         return {
             "theme": theme,
-            "title": theme,
+            "eyebrow": "LOVE PATTERN NAVIGATOR",
+            "title": "你是恋爱脑，还是生理性喜欢？",
             "subtitle": "30 道题，看清你的心动到底是哪一种",
-            "price_hint": "娱乐测试，仅供情感自我探索参考",
+            "subtitle_lines": [
+                "不是每一次放不下，都是爱得太深。",
+                "也不是每一次想靠近，都适合走到长期。",
+            ],
+            "price_hint": "娱乐测试，仅供情感自我探索参考，不构成心理诊断。",
             "intro": "这个测试会通过 30 个选择题，帮你分辨自己更接近恋爱脑、生理性喜欢、清醒慢热，还是安全感依恋。",
-            "style": "pink",
+            "intro_paragraphs": [
+                "你有没有过这种感觉：明明才认识不久，却会忍不住等消息、翻动态、猜对方每一句话的意思。",
+                "有时候你以为自己很喜欢一个人，但真正让你上头的，可能是身体吸引、暧昧刺激，或者被坚定选择的感觉。",
+                "很多人的感情困惑，不是不会爱，而是没有分清：你是在爱这个人，还是在迷恋一种被点燃、被需要、被回应的状态。",
+            ],
+            "value_statement": "这个测试会从情绪投入、身体吸引、长期适配、安全感需求四个维度，帮你判断：你现在更接近恋爱脑投入，还是生理性喜欢上头。",
+            "dimensions": ["情绪投入", "身体吸引", "长期适配", "安全感需求"],
+            "style": "editorial-love",
             "share_line": "喜欢一个人不难，难的是看清自己到底在被什么吸引。",
             "questions": build_love_questions(),
             "results": build_love_results(theme),
@@ -318,9 +330,34 @@ def render_html(config):
     subtitle = html.escape(config["subtitle"])
     price_hint = html.escape(config["price_hint"])
     intro = html.escape(config.get("intro", f"这个测试会通过 {len(config['questions'])} 个选择题，帮你看见自己更接近哪一种状态。"))
+    eyebrow = html.escape(config.get("eyebrow", "SELF DISCOVERY TEST"))
+    subtitle_lines = [html.escape(line) for line in config.get("subtitle_lines", [])]
+    intro_paragraphs = [html.escape(line) for line in config.get("intro_paragraphs", [config.get("intro", "")])]
+    value_statement = html.escape(config.get("value_statement", intro))
+    dimensions = [html.escape(item) for item in config.get("dimensions", [])]
     share_line = html.escape(config.get("share_line", "你不是没有答案，只是需要一个更适合自己的方向。"))
     generated_at = datetime.now().strftime("%Y-%m-%d %H:%M")
-    if config.get("style") == "pink":
+    if config.get("style") == "editorial-love":
+        colors = {
+            "text": "#172432",
+            "bg": "#f8f8f5",
+            "tag_bg": "transparent",
+            "tag_text": "#5f6971",
+            "sub": "#6a747b",
+            "panel_border": "#d9dee2",
+            "panel_shadow": "0 16px 40px rgba(23, 36, 50, 0.08)",
+            "notice": "#74808a",
+            "progress": "#e8d7df",
+            "primary": "#172432",
+            "secondary": "#eef0f0",
+            "secondary_text": "#4f5a63",
+            "option_bg": "rgba(255, 255, 255, 0.86)",
+            "option_hover": "#fff3f7",
+            "result": "#8f315b",
+            "share_bg": "#fff2f6",
+            "accent": "#a64d6a",
+        }
+    elif config.get("style") == "pink":
         colors = {
             "text": "#34232b",
             "bg": "linear-gradient(180deg, #fff5f8 0%, #fffafd 48%, #fff3f6 100%)",
@@ -359,6 +396,19 @@ def render_html(config):
             "share_bg": "#fff3e9",
         }
 
+    if subtitle_lines:
+        subtitle_block = "\n".join(f'      <div>{line}</div>' for line in subtitle_lines)
+    else:
+        subtitle_block = f"      <div>{subtitle}</div>"
+    intro_block = "\n".join(f"      <p>{paragraph}</p>" for paragraph in intro_paragraphs)
+    dimension_block = ""
+    if dimensions:
+        dimension_items = "\n".join(f'        <div class="dimension">{item}</div>' for item in dimensions)
+        dimension_block = f"""
+      <div class="dimensions">
+{dimension_items}
+      </div>"""
+
     return f"""<!doctype html>
 <html lang="zh-CN">
 <head>
@@ -372,47 +422,98 @@ def render_html(config):
       font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", sans-serif;
       color: {colors["text"]};
       background: {colors["bg"]};
+      background-image:
+        linear-gradient(rgba(23, 36, 50, 0.045) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(23, 36, 50, 0.045) 1px, transparent 1px),
+        linear-gradient(rgba(23, 36, 50, 0.025) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(23, 36, 50, 0.025) 1px, transparent 1px);
+      background-size: 28px 28px, 28px 28px, 7px 7px, 7px 7px;
       line-height: 1.7;
     }}
     .page {{
       width: min(760px, 100%);
       margin: 0 auto;
-      padding: 22px 16px 48px;
+      padding: 44px 22px 56px;
     }}
     .hero {{
-      padding: 28px 0 18px;
+      padding: 28px 0 26px;
+      text-align: center;
     }}
     .tag {{
       display: inline-block;
-      padding: 4px 10px;
-      border-radius: 999px;
+      padding: 0;
       background: {colors["tag_bg"]};
       color: {colors["tag_text"]};
-      font-size: 13px;
-      margin-bottom: 14px;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      font-size: 15px;
+      letter-spacing: 0.2em;
+      margin-bottom: 36px;
     }}
     h1 {{
       margin: 0;
-      font-size: 30px;
+      font-size: clamp(34px, 7vw, 48px);
       line-height: 1.25;
       letter-spacing: 0;
+      font-weight: 900;
     }}
     .subtitle {{
-      margin: 12px 0 0;
+      margin: 24px 0 0;
       color: {colors["sub"]};
-      font-size: 16px;
+      font-size: clamp(18px, 4.5vw, 24px);
+      font-weight: 700;
+      line-height: 1.65;
+    }}
+    .divider {{
+      width: 92px;
+      height: 1px;
+      background: #cfd5d8;
+      margin: 44px auto 0;
     }}
     .panel {{
-      background: #fff;
+      background: rgba(255, 255, 255, 0.82);
       border: 1px solid {colors["panel_border"]};
-      border-radius: 8px;
-      padding: 18px;
+      border-radius: 0;
+      padding: 28px;
       box-shadow: {colors["panel_shadow"]};
     }}
+    .intro-panel {{
+      background: transparent;
+      border: 0;
+      box-shadow: none;
+      padding: 20px 0 0;
+      font-size: clamp(17px, 4.2vw, 22px);
+      color: #3e4a52;
+      line-height: 1.95;
+    }}
+    .intro-panel p {{
+      margin: 0 0 22px;
+    }}
+    .value {{
+      margin-top: 22px;
+      color: {colors["text"]};
+      font-weight: 850;
+    }}
+    .dimensions {{
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px;
+      margin: 36px 0 34px;
+    }}
+    .dimension {{
+      border: 1px solid #cfd5d8;
+      background: rgba(255, 255, 255, 0.56);
+      color: #65727b;
+      min-height: 62px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: clamp(16px, 4vw, 20px);
+      font-weight: 750;
+    }}
     .notice {{
-      margin: 14px 0 0;
+      margin: 24px 0 0;
       color: {colors["notice"]};
-      font-size: 13px;
+      font-size: 14px;
     }}
     .progress {{
       height: 8px;
@@ -460,9 +561,10 @@ def render_html(config):
     }}
     button.primary, button.secondary {{
       border: 0;
-      border-radius: 8px;
-      padding: 12px 16px;
-      font-size: 16px;
+      border-radius: 0;
+      padding: 18px 16px;
+      font-size: 22px;
+      font-weight: 850;
       cursor: pointer;
     }}
     .primary {{
@@ -501,23 +603,41 @@ def render_html(config):
       text-align: center;
       color: {colors["notice"]};
       font-size: 12px;
-      margin-top: 20px;
+      margin-top: 26px;
+    }}
+    @media (max-width: 520px) {{
+      .page {{
+        padding: 36px 24px 48px;
+      }}
+      .panel {{
+        padding: 22px;
+      }}
+      .dimensions {{
+        gap: 10px;
+      }}
+      .dimension {{
+        min-height: 54px;
+      }}
     }}
   </style>
 </head>
 <body>
   <main class="page">
     <section class="hero">
-      <span class="tag">自我探索测试</span>
+      <span class="tag">• {eyebrow} •</span>
       <h1>{title}</h1>
-      <p class="subtitle">{subtitle}</p>
-      <p class="notice">{price_hint}</p>
+      <div class="subtitle">
+{subtitle_block}
+      </div>
+      <div class="divider"></div>
     </section>
 
-    <section id="start" class="panel">
-      <p>{intro}</p>
-      <p>不用纠结标准答案，凭第一感觉选就好。</p>
+    <section id="start" class="intro-panel">
+{intro_block}
+      <p class="value">{value_statement}</p>
+{dimension_block}
       <button class="primary" onclick="startTest()">开始测试</button>
+      <p class="notice">{price_hint}</p>
     </section>
 
     <section id="quiz" class="panel hidden">
