@@ -1,6 +1,7 @@
 from pathlib import Path
 from datetime import datetime
 import html
+import re
 import shutil
 
 
@@ -22,18 +23,28 @@ def find_tests():
     return tests
 
 
+def safe_slug(name):
+    if "稳定上班" in name or "自由赚钱" in name:
+        return "stable-work"
+    if "恋爱脑" in name or "生理性喜欢" in name:
+        return "love-style"
+    slug = re.sub(r"[^a-zA-Z0-9]+", "-", name).strip("-").lower()
+    return slug or "test"
+
+
 def copy_tests(test_folders):
     TESTS_DIR.mkdir(parents=True, exist_ok=True)
     published = []
     for folder in test_folders:
-        target = TESTS_DIR / folder.name
+        slug = safe_slug(folder.name)
+        target = TESTS_DIR / slug
         if target.exists():
             shutil.rmtree(target)
         shutil.copytree(folder, target)
         published.append(
             {
                 "name": folder.name,
-                "path": f"tests/{folder.name}/index.html",
+                "path": f"tests/{slug}/index.html",
             }
         )
     return published

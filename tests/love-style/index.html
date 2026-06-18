@@ -1,0 +1,245 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>你是恋爱脑还是生理性喜欢？</title>
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", sans-serif;
+      color: #34232b;
+      background: linear-gradient(180deg, #fff5f8 0%, #fffafd 48%, #fff3f6 100%);
+      line-height: 1.7;
+    }
+    .page {
+      width: min(760px, 100%);
+      margin: 0 auto;
+      padding: 22px 16px 48px;
+    }
+    .hero {
+      padding: 28px 0 18px;
+    }
+    .tag {
+      display: inline-block;
+      padding: 4px 10px;
+      border-radius: 999px;
+      background: #ffe1ec;
+      color: #a93562;
+      font-size: 13px;
+      margin-bottom: 14px;
+    }
+    h1 {
+      margin: 0;
+      font-size: 30px;
+      line-height: 1.25;
+      letter-spacing: 0;
+    }
+    .subtitle {
+      margin: 12px 0 0;
+      color: #765866;
+      font-size: 16px;
+    }
+    .panel {
+      background: #fff;
+      border: 1px solid #f3cddd;
+      border-radius: 8px;
+      padding: 18px;
+      box-shadow: 0 12px 34px rgba(185, 82, 124, 0.12);
+    }
+    .notice {
+      margin: 14px 0 0;
+      color: #946476;
+      font-size: 13px;
+    }
+    .progress {
+      height: 8px;
+      background: #f9dce8;
+      border-radius: 999px;
+      overflow: hidden;
+      margin: 18px 0;
+    }
+    .bar {
+      height: 100%;
+      width: 0;
+      background: #d94f86;
+      transition: width .25s ease;
+    }
+    .question-count {
+      color: #946476;
+      font-size: 14px;
+      margin-bottom: 8px;
+    }
+    .question {
+      font-size: 20px;
+      font-weight: 700;
+      margin-bottom: 16px;
+    }
+    .option {
+      width: 100%;
+      text-align: left;
+      border: 1px solid #f3cddd;
+      background: #fff9fb;
+      color: #34232b;
+      padding: 14px 14px;
+      border-radius: 8px;
+      margin: 10px 0;
+      font-size: 16px;
+      cursor: pointer;
+    }
+    .option:hover {
+      border-color: #d94f86;
+      background: #fff0f6;
+    }
+    .actions {
+      display: flex;
+      gap: 10px;
+      margin-top: 16px;
+    }
+    button.primary, button.secondary {
+      border: 0;
+      border-radius: 8px;
+      padding: 12px 16px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+    .primary {
+      background: #d94f86;
+      color: white;
+      width: 100%;
+    }
+    .secondary {
+      background: #f7dde8;
+      color: #7d3956;
+    }
+    .result-title {
+      font-size: 24px;
+      font-weight: 800;
+      margin: 4px 0 8px;
+    }
+    .result-summary {
+      color: #8f315b;
+      font-weight: 700;
+      margin-bottom: 16px;
+    }
+    .result-section {
+      border-top: 1px solid #f3cddd;
+      padding-top: 14px;
+      margin-top: 14px;
+    }
+    .share {
+      background: #fff0f6;
+      border-left: 4px solid #d94f86;
+      padding: 12px;
+      border-radius: 6px;
+      margin-top: 18px;
+    }
+    .hidden { display: none; }
+    .footer {
+      text-align: center;
+      color: #946476;
+      font-size: 12px;
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <section class="hero">
+      <span class="tag">自我探索测试</span>
+      <h1>你是恋爱脑还是生理性喜欢？</h1>
+      <p class="subtitle">30 道题，看清你的心动到底是哪一种</p>
+      <p class="notice">娱乐测试，仅供情感自我探索参考</p>
+    </section>
+
+    <section id="start" class="panel">
+      <p>这个测试会通过 30 个选择题，帮你分辨自己更接近恋爱脑、生理性喜欢、清醒慢热，还是安全感依恋。</p>
+      <p>不用纠结标准答案，凭第一感觉选就好。</p>
+      <button class="primary" onclick="startTest()">开始测试</button>
+    </section>
+
+    <section id="quiz" class="panel hidden">
+      <div class="question-count" id="count"></div>
+      <div class="progress"><div class="bar" id="bar"></div></div>
+      <div class="question" id="question"></div>
+      <div id="options"></div>
+      <div class="actions">
+        <button class="secondary" onclick="goBack()">上一题</button>
+      </div>
+    </section>
+
+    <section id="result" class="panel hidden"></section>
+
+    <div class="footer">生成时间：2026-06-18 01:04</div>
+  </main>
+
+  <script>
+    const TEST = {"theme": "你是恋爱脑还是生理性喜欢？", "title": "你是恋爱脑还是生理性喜欢？", "subtitle": "30 道题，看清你的心动到底是哪一种", "price_hint": "娱乐测试，仅供情感自我探索参考", "intro": "这个测试会通过 30 个选择题，帮你分辨自己更接近恋爱脑、生理性喜欢、清醒慢热，还是安全感依恋。", "style": "pink", "share_line": "喜欢一个人不难，难的是看清自己到底在被什么吸引。", "questions": [{"text": "你刚认识一个有好感的人，最先被什么打动？", "options": [{"text": "对方对我特别上心", "type": "A"}, {"text": "对方的气味、声音或外形很吸引我", "type": "B"}, {"text": "相处舒服，不用刻意表现", "type": "C"}, {"text": "对方给我稳定回应", "type": "D"}]}, {"text": "你会在什么情况下开始反复想一个人？", "options": [{"text": "他一点点冷淡，我就开始不安", "type": "A"}, {"text": "见过面后身体记住了那种感觉", "type": "B"}, {"text": "聊天很顺，价值观也接近", "type": "C"}, {"text": "他让我觉得自己被认真对待", "type": "D"}]}, {"text": "如果对方突然不回消息，你更可能怎么想？", "options": [{"text": "是不是我哪里做错了", "type": "A"}, {"text": "会有点想念，但更多是被吊起欲望", "type": "B"}, {"text": "先观察，不急着下结论", "type": "C"}, {"text": "会在意他是不是还可靠", "type": "D"}]}, {"text": "你最容易把哪种感觉当成喜欢？", "options": [{"text": "想一直确认他爱不爱我", "type": "A"}, {"text": "心跳快、上头、想靠近", "type": "B"}, {"text": "相处自然，有共同语言", "type": "C"}, {"text": "被照顾、被保护、很安心", "type": "D"}]}, {"text": "你在暧昧期最受不了什么？", "options": [{"text": "忽冷忽热", "type": "A"}, {"text": "没有身体张力", "type": "B"}, {"text": "聊不到一起", "type": "C"}, {"text": "承诺不清楚", "type": "D"}]}, {"text": "你更容易因为哪句话心软？", "options": [{"text": "我只对你这样", "type": "A"}, {"text": "我很想见你", "type": "B"}, {"text": "我懂你的想法", "type": "C"}, {"text": "我会一直在", "type": "D"}]}, {"text": "如果一个人很帅但不稳定，你会？", "options": [{"text": "容易陷进去，想证明自己特别", "type": "A"}, {"text": "很容易被吸引，先享受当下", "type": "B"}, {"text": "会喜欢，但不会立刻交出自己", "type": "C"}, {"text": "会退后，因为我需要确定感", "type": "D"}]}, {"text": "如果一个人条件普通但很稳定，你会？", "options": [{"text": "如果他很爱我，我会慢慢依赖", "type": "A"}, {"text": "可能不够上头", "type": "B"}, {"text": "看相处质量，不急着否定", "type": "C"}, {"text": "会很加分，稳定让我安心", "type": "D"}]}, {"text": "你最常在感情里犯的错是？", "options": [{"text": "把对方看得太重", "type": "A"}, {"text": "把心动当长期合适", "type": "B"}, {"text": "想太多，启动太慢", "type": "C"}, {"text": "太需要确定答案", "type": "D"}]}, {"text": "你最容易被哪种人吸引？", "options": [{"text": "会给我强烈情绪波动的人", "type": "A"}, {"text": "有性张力、有魅力的人", "type": "B"}, {"text": "成熟、有边界、聊得来的人", "type": "C"}, {"text": "温柔稳定、愿意陪我的人", "type": "D"}]}, {"text": "你确认喜欢一个人时，身体反应重要吗？", "options": [{"text": "重要，但我更在意他爱不爱我", "type": "A"}, {"text": "非常重要，没有反应就很难喜欢", "type": "B"}, {"text": "重要，但不是唯一标准", "type": "C"}, {"text": "有就更好，没有也会看安全感", "type": "D"}]}, {"text": "你会因为一个人对你好而喜欢他吗？", "options": [{"text": "很容易，我会被偏爱打动", "type": "A"}, {"text": "不一定，没吸引力就不行", "type": "B"}, {"text": "可能会，但要看是否真的合拍", "type": "C"}, {"text": "会，稳定的好对我很重要", "type": "D"}]}, {"text": "你在关系里最想要什么？", "options": [{"text": "被坚定选择", "type": "A"}, {"text": "强烈心动和亲密感", "type": "B"}, {"text": "互相理解、共同成长", "type": "C"}, {"text": "稳定陪伴和安全感", "type": "D"}]}, {"text": "暧昧最上头的瞬间是什么？", "options": [{"text": "他突然只对我特殊", "type": "A"}, {"text": "靠近、对视、触碰的瞬间", "type": "B"}, {"text": "发现我们很同频", "type": "C"}, {"text": "他认真回应我的需求", "type": "D"}]}, {"text": "你更害怕哪种结局？", "options": [{"text": "我很爱，但他没那么爱", "type": "A"}, {"text": "热度过了就没感觉", "type": "B"}, {"text": "判断错人浪费时间", "type": "C"}, {"text": "关系不稳定让我消耗", "type": "D"}]}, {"text": "朋友说你恋爱脑，你的反应是？", "options": [{"text": "可能吧，我真的容易陷进去", "type": "A"}, {"text": "我只是容易被吸引，不一定想长期", "type": "B"}, {"text": "我其实很清醒，只是慢热", "type": "C"}, {"text": "我不是恋爱脑，我只是需要安全感", "type": "D"}]}, {"text": "你会偷偷研究对方的动态吗？", "options": [{"text": "会，而且越看越在意", "type": "A"}, {"text": "会看，但更多是确认吸引感", "type": "B"}, {"text": "偶尔看，不会影响节奏", "type": "C"}, {"text": "会看他是否稳定一致", "type": "D"}]}, {"text": "如果对方很会撩，你会？", "options": [{"text": "很容易当真", "type": "A"}, {"text": "很容易被点燃", "type": "B"}, {"text": "会心动，但会看行动", "type": "C"}, {"text": "会开心，但也会看是否靠谱", "type": "D"}]}, {"text": "你更相信哪种喜欢？", "options": [{"text": "离不开、放不下、很在乎", "type": "A"}, {"text": "身体诚实，见面就知道", "type": "B"}, {"text": "舒服自然，越相处越确定", "type": "C"}, {"text": "稳定踏实，不用猜来猜去", "type": "D"}]}, {"text": "你会因为孤独进入一段关系吗？", "options": [{"text": "有可能，我怕没人陪", "type": "A"}, {"text": "如果有吸引力，可能会试试", "type": "B"}, {"text": "不太会，我需要确认合适", "type": "C"}, {"text": "会心动于陪伴，但会看稳定性", "type": "D"}]}, {"text": "你最需要提醒自己的是？", "options": [{"text": "不要把全部情绪交给一个人", "type": "A"}, {"text": "不要把上头误认为真爱", "type": "B"}, {"text": "不要因为太清醒错过感受", "type": "C"}, {"text": "不要用控制换安全感", "type": "D"}]}, {"text": "对方哪种行为最让你加分？", "options": [{"text": "公开偏爱我", "type": "A"}, {"text": "见面有强烈吸引和默契", "type": "B"}, {"text": "尊重我的节奏和想法", "type": "C"}, {"text": "说到做到，稳定出现", "type": "D"}]}, {"text": "你分不清喜欢时，通常是因为？", "options": [{"text": "情绪太满，看不清自己", "type": "A"}, {"text": "身体很想靠近，但心里不确定", "type": "B"}, {"text": "理性和感性在打架", "type": "C"}, {"text": "太想要安全感，容易误判", "type": "D"}]}, {"text": "你最容易沉迷哪种关系？", "options": [{"text": "忽冷忽热但偶尔很甜", "type": "A"}, {"text": "暧昧刺激但不确定", "type": "B"}, {"text": "慢慢了解、越聊越深", "type": "C"}, {"text": "被照顾、被惦记、被保护", "type": "D"}]}, {"text": "如果只选一个，你更想要？", "options": [{"text": "被爱得很明显", "type": "A"}, {"text": "心动得很强烈", "type": "B"}, {"text": "相处得很舒服", "type": "C"}, {"text": "关系很稳定", "type": "D"}]}, {"text": "你会把对方幻想得很完美吗？", "options": [{"text": "会，我容易自动加滤镜", "type": "A"}, {"text": "会被吸引力放大优点", "type": "B"}, {"text": "不太会，我会看真实相处", "type": "C"}, {"text": "会，但我更看他能不能给安全感", "type": "D"}]}, {"text": "在喜欢的人面前，你最像哪一种？", "options": [{"text": "容易患得患失", "type": "A"}, {"text": "容易害羞但很想靠近", "type": "B"}, {"text": "表面淡定，心里观察", "type": "C"}, {"text": "想确认关系是否可靠", "type": "D"}]}, {"text": "你更容易在哪个阶段上头？", "options": [{"text": "对方开始冷下来时", "type": "A"}, {"text": "第一次见面或亲密互动后", "type": "B"}, {"text": "深入聊天之后", "type": "C"}, {"text": "对方持续稳定对我好之后", "type": "D"}]}, {"text": "你判断一个人适不适合长期，最看重？", "options": [{"text": "他是不是足够爱我", "type": "A"}, {"text": "吸引力能不能持续", "type": "B"}, {"text": "三观、沟通和边界", "type": "C"}, {"text": "责任感和稳定性", "type": "D"}]}, {"text": "做完这个测试，你最想知道什么？", "options": [{"text": "我是不是太恋爱脑了", "type": "A"}, {"text": "我是不是只是生理性喜欢", "type": "B"}, {"text": "我到底适合哪种关系", "type": "C"}, {"text": "我为什么总需要安全感", "type": "D"}]}], "results": {"A": {"name": "恋爱脑投入型", "summary": "你不是不会爱，而是太容易把一个人放到情绪中心。", "sections": ["你一旦喜欢上一个人，就很容易把注意力、期待和安全感都放到对方身上。对方一句话、一个眼神、一次回复速度，都可能影响你一整天的状态。", "你的可贵之处是很真诚，也很有投入感。你不是随便喜欢，你只是太渴望被坚定选择，所以会把一点点偏爱看得很重。", "你需要提醒自己：真正适合你的关系，不应该让你一直猜、一直等、一直证明自己值得被爱。未来 7 天，试着把注意力收回一点，先问自己舒服不舒服。"]}, "B": {"name": "生理性喜欢上头型", "summary": "你很容易被吸引力点燃，但这不一定等于长期适合。", "sections": ["你对气味、声音、外形、氛围和亲密张力很敏感。一个人如果刚好踩中你的身体偏好，你会很快产生想靠近、想见面、想继续探索的冲动。", "你的优势是感受力很强，不会骗自己。你能很快判断一个人有没有吸引力，这种直觉在关系里很重要。", "你需要区分：心动是真的，但心动不等于承诺；上头是真的，但上头不等于合适。未来 7 天，如果你很想靠近一个人，也请同时观察他的稳定性和尊重感。"]}, "C": {"name": "清醒慢热型", "summary": "你不是不心动，只是比起上头，你更需要确认这个人值不值得。", "sections": ["你对关系有自己的判断标准，不会因为一点暧昧就立刻交出全部。你可能会心动，但你会一边感受，一边观察对方的边界、沟通和长期适配度。", "你的优势是清醒、有分寸，也更不容易被短期情绪带走。你适合慢慢相处，在稳定互动中确认喜欢。", "你的卡点是有时太理性，容易错过真实的感受。未来 7 天，除了问这个人合不合适，也问问自己：和他在一起时，我有没有变得更松弛？"]}, "D": {"name": "安全感依恋型", "summary": "你最在意的不是刺激，而是对方能不能稳定地把你放在心上。", "sections": ["你在关系里很看重回应、承诺和一致性。比起忽冷忽热的刺激，你更容易被一个人长期、稳定、温柔的行动打动。", "你的优势是适合经营长期关系，也懂得珍惜真正对你好的人。你要的不是轰轰烈烈，而是不用每天猜对方到底在不在乎。", "你需要注意的是，不要因为太想要安全感，就把控制、确认和反复试探当作爱。未来 7 天，试着观察一个人的行动，而不是只盯着一句话。"]}}};
+    let current = 0;
+    let answers = [];
+
+    function show(id) {
+      document.getElementById("start").classList.add("hidden");
+      document.getElementById("quiz").classList.add("hidden");
+      document.getElementById("result").classList.add("hidden");
+      document.getElementById(id).classList.remove("hidden");
+    }
+
+    function startTest() {
+      current = 0;
+      answers = [];
+      show("quiz");
+      renderQuestion();
+    }
+
+    function renderQuestion() {
+      const q = TEST.questions[current];
+      document.getElementById("count").textContent = `第 ${current + 1} / ${TEST.questions.length} 题`;
+      document.getElementById("bar").style.width = `${(current / TEST.questions.length) * 100}%`;
+      document.getElementById("question").textContent = q.text;
+      document.getElementById("options").innerHTML = q.options.map((opt, index) => `
+        <button class="option" onclick="chooseOption('${opt.type}')">${String.fromCharCode(65 + index)}. ${opt.text}</button>
+      `).join("");
+    }
+
+    function chooseOption(type) {
+      answers[current] = type;
+      if (current < TEST.questions.length - 1) {
+        current += 1;
+        renderQuestion();
+      } else {
+        showResult();
+      }
+    }
+
+    function goBack() {
+      if (current === 0) {
+        show("start");
+        return;
+      }
+      current -= 1;
+      renderQuestion();
+    }
+
+    function showResult() {
+      const scores = { A: 0, B: 0, C: 0, D: 0 };
+      answers.forEach(type => scores[type] += 1);
+      const winner = Object.keys(scores).sort((a, b) => scores[b] - scores[a])[0];
+      const result = TEST.results[winner];
+      document.getElementById("bar").style.width = "100%";
+      document.getElementById("result").innerHTML = `
+        <div class="question-count">你的测试结果</div>
+        <div class="result-title">${result.name}</div>
+        <div class="result-summary">${result.summary}</div>
+        ${result.sections.map(section => `<div class="result-section">${section}</div>`).join("")}
+        <div class="share">适合截图分享的一句话：喜欢一个人不难，难的是看清自己到底在被什么吸引。</div>
+        <div class="actions">
+          <button class="primary" onclick="startTest()">重新测试</button>
+        </div>
+      `;
+      show("result");
+    }
+  </script>
+</body>
+</html>
