@@ -306,7 +306,7 @@ def build_config(theme):
             ],
             "value_statement": "这个测试会从情绪投入、身体吸引、长期适配、安全感需求四个维度，帮你判断：你现在更接近恋爱脑投入，还是生理性喜欢上头。",
             "dimensions": ["情绪投入", "身体吸引", "长期适配", "安全感需求"],
-            "style": "editorial-love",
+            "style": "soft-love",
             "share_line": "喜欢一个人不难，难的是看清自己到底在被什么吸引。",
             "questions": build_love_questions(),
             "results": build_love_results(theme),
@@ -337,25 +337,26 @@ def render_html(config):
     dimensions = [html.escape(item) for item in config.get("dimensions", [])]
     share_line = html.escape(config.get("share_line", "你不是没有答案，只是需要一个更适合自己的方向。"))
     generated_at = datetime.now().strftime("%Y-%m-%d %H:%M")
-    if config.get("style") == "editorial-love":
+    if config.get("style") == "soft-love":
         colors = {
-            "text": "#172432",
-            "bg": "#f8f8f5",
+            "text": "#4a2935",
+            "bg": "linear-gradient(180deg, #fff4f7 0%, #fff9fb 46%, #fff2ee 100%)",
             "tag_bg": "transparent",
-            "tag_text": "#5f6971",
-            "sub": "#6a747b",
-            "panel_border": "#d9dee2",
-            "panel_shadow": "0 16px 40px rgba(23, 36, 50, 0.08)",
-            "notice": "#74808a",
-            "progress": "#e8d7df",
-            "primary": "#172432",
-            "secondary": "#eef0f0",
-            "secondary_text": "#4f5a63",
-            "option_bg": "rgba(255, 255, 255, 0.86)",
-            "option_hover": "#fff3f7",
-            "result": "#8f315b",
-            "share_bg": "#fff2f6",
-            "accent": "#a64d6a",
+            "tag_text": "#bd6d87",
+            "sub": "#8d6675",
+            "panel_border": "rgba(232, 166, 188, 0.42)",
+            "panel_shadow": "0 18px 48px rgba(190, 87, 124, 0.14)",
+            "notice": "#a27a88",
+            "progress": "#f6d8e2",
+            "primary": "#c85d84",
+            "secondary": "#f9dfe8",
+            "secondary_text": "#8d4260",
+            "option_bg": "rgba(255, 255, 255, 0.78)",
+            "option_hover": "#fff0f5",
+            "result": "#a23e65",
+            "share_bg": "rgba(255, 240, 246, 0.86)",
+            "accent": "#d78ca6",
+            "button_text": "#fffafc",
         }
     elif config.get("style") == "pink":
         colors = {
@@ -422,13 +423,18 @@ def render_html(config):
       font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", sans-serif;
       color: {colors["text"]};
       background: {colors["bg"]};
-      background-image:
-        linear-gradient(rgba(23, 36, 50, 0.045) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(23, 36, 50, 0.045) 1px, transparent 1px),
-        linear-gradient(rgba(23, 36, 50, 0.025) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(23, 36, 50, 0.025) 1px, transparent 1px);
-      background-size: 28px 28px, 28px 28px, 7px 7px, 7px 7px;
       line-height: 1.7;
+    }}
+    body::before {{
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background:
+        radial-gradient(circle at 18% 10%, rgba(255, 199, 216, 0.55), transparent 28%),
+        radial-gradient(circle at 86% 18%, rgba(255, 222, 203, 0.6), transparent 24%),
+        radial-gradient(circle at 50% 92%, rgba(236, 178, 202, 0.36), transparent 32%);
+      z-index: -1;
     }}
     .page {{
       width: min(760px, 100%);
@@ -470,11 +476,12 @@ def render_html(config):
       margin: 44px auto 0;
     }}
     .panel {{
-      background: rgba(255, 255, 255, 0.82);
+      background: rgba(255, 255, 255, 0.78);
       border: 1px solid {colors["panel_border"]};
-      border-radius: 0;
+      border-radius: 18px;
       padding: 28px;
       box-shadow: {colors["panel_shadow"]};
+      backdrop-filter: blur(10px);
     }}
     .intro-panel {{
       background: transparent;
@@ -482,7 +489,7 @@ def render_html(config):
       box-shadow: none;
       padding: 20px 0 0;
       font-size: clamp(17px, 4.2vw, 22px);
-      color: #3e4a52;
+      color: #654654;
       line-height: 1.95;
     }}
     .intro-panel p {{
@@ -500,15 +507,16 @@ def render_html(config):
       margin: 36px 0 34px;
     }}
     .dimension {{
-      border: 1px solid #cfd5d8;
+      border: 1px solid rgba(215, 140, 166, 0.42);
       background: rgba(255, 255, 255, 0.56);
-      color: #65727b;
+      color: #9b5c73;
       min-height: 62px;
       display: flex;
       align-items: center;
       justify-content: center;
       font-size: clamp(16px, 4vw, 20px);
       font-weight: 750;
+      border-radius: 14px;
     }}
     .notice {{
       margin: 24px 0 0;
@@ -561,7 +569,7 @@ def render_html(config):
     }}
     button.primary, button.secondary {{
       border: 0;
-      border-radius: 0;
+      border-radius: 16px;
       padding: 18px 16px;
       font-size: 22px;
       font-weight: 850;
@@ -569,8 +577,9 @@ def render_html(config):
     }}
     .primary {{
       background: {colors["primary"]};
-      color: white;
+      color: {colors.get("button_text", "white")};
       width: 100%;
+      box-shadow: 0 14px 30px rgba(200, 93, 132, 0.24);
     }}
     .secondary {{
       background: {colors["secondary"]};
