@@ -5,17 +5,15 @@ echo "开始一键发布..."
 echo "目标网站：https://shufan-art.github.io/shufan/"
 echo ""
 
-if [ -f "网页上传版/index.html" ]; then
-  cp "网页上传版/index.html" "index.html"
-fi
+python3 publish_to_github_pages.py
 
-if [ -f "网页上传版/test_config.json" ]; then
-  cp "网页上传版/test_config.json" "test_config.json"
+if [ -d "site" ]; then
+  cp -R site/. .
 fi
 
 git remote set-url origin "https://github.com/shufan-art/shufan.git"
 
-git add index.html test_config.json generate_test.py "网页上传版/index.html" "网页上传版/test_config.json" 2>/dev/null
+git add index.html .nojekyll tests generate_test.py publish_to_github_pages.py "网页上传版/index.html" "网页上传版/test_config.json" 2>/dev/null
 
 if git diff --cached --quiet; then
   echo "没有发现新的网页改动，准备直接推送当前版本。"

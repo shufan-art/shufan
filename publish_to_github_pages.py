@@ -6,8 +6,8 @@ import shutil
 
 BASE_DIR = Path(__file__).parent
 OUTPUT_DIR = BASE_DIR / "output"
-DOCS_DIR = BASE_DIR / "docs"
-TESTS_DIR = DOCS_DIR / "tests"
+PUBLISH_DIR = BASE_DIR / "site"
+TESTS_DIR = PUBLISH_DIR / "tests"
 
 
 def find_tests():
@@ -59,8 +59,8 @@ def build_homepage(published):
     body {{
       margin: 0;
       font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", sans-serif;
-      background: #fff8f2;
-      color: #2b211d;
+      background: linear-gradient(180deg, #fff5f8 0%, #fffafd 48%, #fff8f2 100%);
+      color: #34232b;
       line-height: 1.7;
     }}
     main {{
@@ -76,7 +76,7 @@ def build_homepage(published):
     }}
     .intro {{
       margin: 0 0 24px;
-      color: #6d5a50;
+      color: #765866;
     }}
     .grid {{
       display: grid;
@@ -86,16 +86,16 @@ def build_homepage(published):
     .card {{
       display: block;
       padding: 16px;
-      border: 1px solid #f0d8c7;
+      border: 1px solid #f3cddd;
       border-radius: 8px;
       background: #fff;
       color: #2b211d;
       text-decoration: none;
-      box-shadow: 0 8px 24px rgba(112, 65, 32, 0.08);
+      box-shadow: 0 12px 34px rgba(185, 82, 124, 0.12);
     }}
     .card:hover {{
-      border-color: #dc6b2f;
-      background: #fff3e9;
+      border-color: #d94f86;
+      background: #fff0f6;
     }}
     .empty {{
       padding: 18px;
@@ -127,15 +127,15 @@ def build_homepage(published):
 
 def main():
     test_folders = find_tests()
-    DOCS_DIR.mkdir(parents=True, exist_ok=True)
+    PUBLISH_DIR.mkdir(parents=True, exist_ok=True)
     published = copy_tests(test_folders)
-    (DOCS_DIR / "index.html").write_text(build_homepage(published), encoding="utf-8")
-    (DOCS_DIR / ".nojekyll").write_text("", encoding="utf-8")
+    (PUBLISH_DIR / "index.html").write_text(build_homepage(published), encoding="utf-8")
+    (PUBLISH_DIR / ".nojekyll").write_text("", encoding="utf-8")
 
     print("GitHub Pages 文件已生成")
-    print(f"发布目录：{DOCS_DIR}")
+    print(f"发布目录：{PUBLISH_DIR}")
     print(f"测试页数量：{len(published)}")
-    print("下一步：把通用测试壳文件夹推到 GitHub，然后在 GitHub Pages 里选择 docs 目录发布。")
+    print("下一步：运行一键发布.command，GitHub Pages 选择 /(root) 发布。")
 
 
 if __name__ == "__main__":
