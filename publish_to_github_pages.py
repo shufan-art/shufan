@@ -28,6 +28,8 @@ def safe_slug(name):
         return "stable-work"
     if "恋爱脑" in name or "生理性喜欢" in name:
         return "love-style"
+    if "躺平" in name or "内卷" in name or "米氏盒" in name:
+        return "pace-check"
     slug = re.sub(r"[^a-zA-Z0-9]+", "-", name).strip("-").lower()
     return slug or "test"
 
