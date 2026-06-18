@@ -31,8 +31,10 @@ if [ -z "$token" ]; then
   exit 1
 fi
 
+printf "protocol=https\nhost=github.com\nusername=%s\n\n" "$username" | git credential-osxkeychain erase
+printf "protocol=https\nhost=github.com\n\n" | git credential-osxkeychain erase
 printf "protocol=https\nhost=github.com\nusername=%s\npassword=%s\n\n" "$username" "$token" | git credential-osxkeychain store
-git remote set-url origin "https://github.com/shufan-art/shufan.git"
+git remote set-url origin "https://${username}@github.com/shufan-art/shufan.git"
 
 echo ""
 echo "授权信息已保存到系统钥匙串。"

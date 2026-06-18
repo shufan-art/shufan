@@ -6,6 +6,8 @@ echo "当前目录：$(pwd)"
 echo "目标仓库：https://github.com/shufan-art/shufan.git"
 echo ""
 
+git remote set-url origin "https://shufan-art@github.com/shufan-art/shufan.git"
+
 git status --short --branch
 echo ""
 

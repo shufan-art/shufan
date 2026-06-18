@@ -11,7 +11,7 @@ if [ -d "site" ]; then
   cp -R site/. .
 fi
 
-git remote set-url origin "https://github.com/shufan-art/shufan.git"
+git remote set-url origin "https://shufan-art@github.com/shufan-art/shufan.git"
 
 git add index.html .nojekyll tests generate_test.py publish_to_github_pages.py "网页上传版/index.html" "网页上传版/test_config.json" 2>/dev/null
 
