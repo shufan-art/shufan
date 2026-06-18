@@ -1,6 +1,7 @@
 from pathlib import Path
 from datetime import datetime
 import html
+import json
 import re
 import shutil
 
@@ -36,18 +37,28 @@ def safe_slug(name):
     return slug or "test"
 
 
+def read_config(folder):
+    config_file = folder / "test_config.json"
+    try:
+        return json.loads(config_file.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError):
+        return {}
+
+
 def copy_tests(test_folders):
     TESTS_DIR.mkdir(parents=True, exist_ok=True)
     published = []
     for folder in test_folders:
-        slug = safe_slug(folder.name)
+        config = read_config(folder)
+        slug = config.get("slug") or safe_slug(folder.name)
+        title = config.get("title") or folder.name
         target = TESTS_DIR / slug
         if target.exists():
             shutil.rmtree(target)
         shutil.copytree(folder, target)
         published.append(
             {
-                "name": folder.name,
+                "name": title,
                 "path": f"tests/{slug}/index.html",
             }
         )

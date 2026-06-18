@@ -1,0 +1,332 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>你的恋爱清醒度到了第几级？</title>
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", sans-serif;
+      color: #4a2935;
+      background: linear-gradient(180deg, #fff4f7 0%, #fff9fb 46%, #fff2ee 100%);
+      line-height: 1.7;
+    }
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background:
+        radial-gradient(circle at 18% 10%, rgba(255, 199, 216, 0.36), transparent 28%),
+        radial-gradient(circle at 86% 18%, rgba(223, 232, 218, 0.55), transparent 24%),
+        radial-gradient(circle at 50% 92%, rgba(196, 212, 196, 0.32), transparent 32%);
+      z-index: -1;
+    }
+    .page {
+      width: min(760px, 100%);
+      margin: 0 auto;
+      padding: 44px 22px 56px;
+    }
+    .hero {
+      padding: 28px 0 26px;
+      text-align: center;
+    }
+    .tag {
+      display: inline-block;
+      padding: 0;
+      background: transparent;
+      color: #bd6d87;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      font-size: 15px;
+      letter-spacing: 0.2em;
+      margin-bottom: 36px;
+    }
+    h1 {
+      margin: 0;
+      font-size: clamp(34px, 7vw, 48px);
+      line-height: 1.25;
+      letter-spacing: 0;
+      font-weight: 900;
+    }
+    .subtitle {
+      margin: 24px 0 0;
+      color: #8d6675;
+      font-size: clamp(18px, 4.5vw, 24px);
+      font-weight: 700;
+      line-height: 1.65;
+    }
+    .divider {
+      width: 92px;
+      height: 1px;
+      background: #cfd5d8;
+      margin: 44px auto 0;
+    }
+    .panel {
+      background: rgba(255, 255, 255, 0.78);
+      border: 1px solid rgba(232, 166, 188, 0.42);
+      border-radius: 18px;
+      padding: 28px;
+      box-shadow: 0 18px 48px rgba(190, 87, 124, 0.14);
+      backdrop-filter: blur(10px);
+    }
+    .intro-panel {
+      background: transparent;
+      border: 0;
+      box-shadow: none;
+      padding: 20px 0 0;
+      font-size: clamp(17px, 4.2vw, 22px);
+      color: #654654;
+      line-height: 1.95;
+    }
+    .intro-panel p {
+      margin: 0 0 22px;
+    }
+    .value {
+      margin-top: 22px;
+      color: #4a2935;
+      font-weight: 850;
+    }
+    .dimensions {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px;
+      margin: 36px 0 34px;
+    }
+    .dimension {
+      border: 1px solid rgba(215, 140, 166, 0.42);
+      background: rgba(255, 255, 255, 0.56);
+      color: #9b5c73;
+      min-height: 62px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: clamp(16px, 4vw, 20px);
+      font-weight: 750;
+      border-radius: 14px;
+    }
+    .notice {
+      margin: 24px 0 0;
+      color: #a27a88;
+      font-size: 14px;
+    }
+    .progress {
+      height: 8px;
+      background: #f6d8e2;
+      border-radius: 999px;
+      overflow: hidden;
+      margin: 18px 0;
+    }
+    .bar {
+      height: 100%;
+      width: 0;
+      background: #c85d84;
+      transition: width .25s ease;
+    }
+    .question-count {
+      color: #a27a88;
+      font-size: 14px;
+      margin-bottom: 8px;
+    }
+    .question {
+      font-size: 20px;
+      font-weight: 700;
+      margin-bottom: 16px;
+    }
+    .option {
+      width: 100%;
+      text-align: left;
+      border: 1px solid rgba(232, 166, 188, 0.42);
+      background: rgba(255, 255, 255, 0.78);
+      color: #4a2935;
+      padding: 14px 14px;
+      border-radius: 8px;
+      margin: 10px 0;
+      font-size: 16px;
+      cursor: pointer;
+    }
+    .option:hover {
+      border-color: #c85d84;
+      background: #fff0f5;
+    }
+    .actions {
+      display: flex;
+      gap: 10px;
+      margin-top: 16px;
+    }
+    button.primary, button.secondary {
+      border: 0;
+      border-radius: 16px;
+      padding: 18px 16px;
+      font-size: 22px;
+      font-weight: 850;
+      cursor: pointer;
+    }
+    .primary {
+      background: #c85d84;
+      color: #fffafc;
+      width: 100%;
+      box-shadow: 0 14px 30px rgba(200, 93, 132, 0.24);
+    }
+    .secondary {
+      background: #f9dfe8;
+      color: #8d4260;
+    }
+    .result-title {
+      font-size: 24px;
+      font-weight: 800;
+      margin: 4px 0 8px;
+    }
+    .result-summary {
+      color: #a23e65;
+      font-weight: 700;
+      margin-bottom: 16px;
+    }
+    .result-section {
+      border-top: 1px solid rgba(232, 166, 188, 0.42);
+      padding-top: 14px;
+      margin-top: 14px;
+    }
+    .share {
+      background: rgba(255, 240, 246, 0.86);
+      border-left: 4px solid #c85d84;
+      padding: 12px;
+      border-radius: 6px;
+      margin-top: 18px;
+    }
+    .hidden { display: none; }
+    .footer {
+      text-align: center;
+      color: #a27a88;
+      font-size: 12px;
+      margin-top: 26px;
+    }
+    @media (max-width: 520px) {
+      .page {
+        padding: 36px 24px 48px;
+      }
+      .panel {
+        padding: 22px;
+      }
+      .dimensions {
+        gap: 10px;
+      }
+      .dimension {
+        min-height: 54px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <section class="hero">
+      <span class="tag">• LOVE CLARITY LEVEL •</span>
+      <h1>你的恋爱清醒度到了第几级？</h1>
+      <div class="subtitle">
+      <div>30 道题，看清你在爱情里到底有多清醒</div>
+      <div>不用纠结标准答案，凭第一感觉选就好。</div>
+      </div>
+      <div class="divider"></div>
+    </section>
+
+    <section id="start" class="intro-panel">
+      <p>喜欢一个人之后，你还能不能守住自己的节奏？</p>
+      <p>你能不能分清心动、执念、合适和长期可靠？</p>
+      <p>这个测试会帮你看清：你的恋爱清醒度到了第几级。</p>
+      <p class="value">这个测试会从边界感、判断力、自我价值、及时止损四个维度，帮你判断你的恋爱清醒度。</p>
+
+      <div class="dimensions">
+        <div class="dimension">边界感</div>
+        <div class="dimension">判断力</div>
+        <div class="dimension">自我价值</div>
+        <div class="dimension">及时止损</div>
+      </div>
+      <button class="primary" onclick="startTest()">开始测试</button>
+      <p class="notice">娱乐测试，仅供自我探索参考，不构成心理或职业诊断。</p>
+    </section>
+
+    <section id="quiz" class="panel hidden">
+      <div class="question-count" id="count"></div>
+      <div class="progress"><div class="bar" id="bar"></div></div>
+      <div class="question" id="question"></div>
+      <div id="options"></div>
+      <div class="actions">
+        <button class="secondary" onclick="goBack()">上一题</button>
+      </div>
+    </section>
+
+    <section id="result" class="panel hidden"></section>
+
+    <div class="footer">生成时间：2026-06-19 00:36</div>
+  </main>
+
+  <script>
+    const TEST = {"slug": "love-clarity", "theme": "你的恋爱清醒度到了第几级？", "eyebrow": "LOVE CLARITY LEVEL", "title": "你的恋爱清醒度到了第几级？", "subtitle": "30 道题，看清你在爱情里到底有多清醒", "subtitle_lines": ["30 道题，看清你在爱情里到底有多清醒", "不用纠结标准答案，凭第一感觉选就好。"], "price_hint": "娱乐测试，仅供自我探索参考，不构成心理或职业诊断。", "intro": "喜欢一个人之后，你还能不能守住自己的节奏？", "intro_paragraphs": ["喜欢一个人之后，你还能不能守住自己的节奏？", "你能不能分清心动、执念、合适和长期可靠？", "这个测试会帮你看清：你的恋爱清醒度到了第几级。"], "value_statement": "这个测试会从边界感、判断力、自我价值、及时止损四个维度，帮你判断你的恋爱清醒度。", "dimensions": ["边界感", "判断力", "自我价值", "及时止损"], "style": "soft-love", "share_line": "恋爱清醒不是不心动，而是心动时也没有弄丢自己。", "questions": [{"text": "你喜欢一个人后，还能不能保持自己的生活节奏？", "options": [{"text": "我很容易被情绪和回应牵动", "type": "A"}, {"text": "我更在意稳定、确定和被放在心上", "type": "B"}, {"text": "我会先观察边界和长期适配", "type": "C"}, {"text": "我需要先确认自己舒服不舒服", "type": "D"}]}, {"text": "对方不回消息时，你会如何反应？", "options": [{"text": "我很容易被情绪和回应牵动", "type": "A"}, {"text": "我更在意稳定、确定和被放在心上", "type": "B"}, {"text": "我会先观察边界和长期适配", "type": "C"}, {"text": "我需要先确认自己舒服不舒服", "type": "D"}]}, {"text": "你能不能在上头时看见对方的问题？", "options": [{"text": "我很容易被情绪和回应牵动", "type": "A"}, {"text": "我更在意稳定、确定和被放在心上", "type": "B"}, {"text": "我会先观察边界和长期适配", "type": "C"}, {"text": "我需要先确认自己舒服不舒服", "type": "D"}]}, {"text": "你会因为喜欢而降低自己的底线吗？", "options": [{"text": "我很容易被情绪和回应牵动", "type": "A"}, {"text": "我更在意稳定、确定和被放在心上", "type": "B"}, {"text": "我会先观察边界和长期适配", "type": "C"}, {"text": "我需要先确认自己舒服不舒服", "type": "D"}]}, {"text": "你是否能区分心动和合适？", "options": [{"text": "我很容易被情绪和回应牵动", "type": "A"}, {"text": "我更在意稳定、确定和被放在心上", "type": "B"}, {"text": "我会先观察边界和长期适配", "type": "C"}, {"text": "我需要先确认自己舒服不舒服", "type": "D"}]}, {"text": "你会不会为了关系牺牲太多自我？", "options": [{"text": "我很容易被情绪和回应牵动", "type": "A"}, {"text": "我更在意稳定、确定和被放在心上", "type": "B"}, {"text": "我会先观察边界和长期适配", "type": "C"}, {"text": "我需要先确认自己舒服不舒服", "type": "D"}]}, {"text": "你能不能及时识别暧昧里的不对劲？", "options": [{"text": "我很容易被情绪和回应牵动", "type": "A"}, {"text": "我更在意稳定、确定和被放在心上", "type": "B"}, {"text": "我会先观察边界和长期适配", "type": "C"}, {"text": "我需要先确认自己舒服不舒服", "type": "D"}]}, {"text": "你会不会把对方的潜力当成现实？", "options": [{"text": "我很容易被情绪和回应牵动", "type": "A"}, {"text": "我更在意稳定、确定和被放在心上", "type": "B"}, {"text": "我会先观察边界和长期适配", "type": "C"}, {"text": "我需要先确认自己舒服不舒服", "type": "D"}]}, {"text": "你最容易在哪种关系里不清醒？", "options": [{"text": "我很容易被情绪和回应牵动", "type": "A"}, {"text": "我更在意稳定、确定和被放在心上", "type": "B"}, {"text": "我会先观察边界和长期适配", "type": "C"}, {"text": "我需要先确认自己舒服不舒服", "type": "D"}]}, {"text": "你能不能接受喜欢的人并不适合你？", "options": [{"text": "我很容易被情绪和回应牵动", "type": "A"}, {"text": "我更在意稳定、确定和被放在心上", "type": "B"}, {"text": "我会先观察边界和长期适配", "type": "C"}, {"text": "我需要先确认自己舒服不舒服", "type": "D"}]}, {"text": "你会在关系开始前观察对方的稳定性吗？", "options": [{"text": "我很容易被情绪和回应牵动", "type": "A"}, {"text": "我更在意稳定、确定和被放在心上", "type": "B"}, {"text": "我会先观察边界和长期适配", "type": "C"}, {"text": "我需要先确认自己舒服不舒服", "type": "D"}]}, {"text": "你会不会因为舍不得而拖延分开？", "options": [{"text": "我很容易被情绪和回应牵动", "type": "A"}, {"text": "我更在意稳定、确定和被放在心上", "type": "B"}, {"text": "我会先观察边界和长期适配", "type": "C"}, {"text": "我需要先确认自己舒服不舒服", "type": "D"}]}, {"text": "你能不能在关系里表达自己的真实需求？", "options": [{"text": "我很容易被情绪和回应牵动", "type": "A"}, {"text": "我更在意稳定、确定和被放在心上", "type": "B"}, {"text": "我会先观察边界和长期适配", "type": "C"}, {"text": "我需要先确认自己舒服不舒服", "type": "D"}]}, {"text": "你会不会把对方的冷淡解释成忙？", "options": [{"text": "我很容易被情绪和回应牵动", "type": "A"}, {"text": "我更在意稳定、确定和被放在心上", "type": "B"}, {"text": "我会先观察边界和长期适配", "type": "C"}, {"text": "我需要先确认自己舒服不舒服", "type": "D"}]}, {"text": "你判断一个人是否靠谱，主要看什么？", "options": [{"text": "我很容易被情绪和回应牵动", "type": "A"}, {"text": "我更在意稳定、确定和被放在心上", "type": "B"}, {"text": "我会先观察边界和长期适配", "type": "C"}, {"text": "我需要先确认自己舒服不舒服", "type": "D"}]}, {"text": "你会不会因为怕失去而主动讨好？", "options": [{"text": "我很容易被情绪和回应牵动", "type": "A"}, {"text": "我更在意稳定、确定和被放在心上", "type": "B"}, {"text": "我会先观察边界和长期适配", "type": "C"}, {"text": "我需要先确认自己舒服不舒服", "type": "D"}]}, {"text": "你有没有能力在关系里及时止损？", "options": [{"text": "我很容易被情绪和回应牵动", "type": "A"}, {"text": "我更在意稳定、确定和被放在心上", "type": "B"}, {"text": "我会先观察边界和长期适配", "type": "C"}, {"text": "我需要先确认自己舒服不舒服", "type": "D"}]}, {"text": "你能不能识别自己是在爱，还是在执念？", "options": [{"text": "我很容易被情绪和回应牵动", "type": "A"}, {"text": "我更在意稳定、确定和被放在心上", "type": "B"}, {"text": "我会先观察边界和长期适配", "type": "C"}, {"text": "我需要先确认自己舒服不舒服", "type": "D"}]}, {"text": "你更相信感觉，还是相信长期行为？", "options": [{"text": "我很容易被情绪和回应牵动", "type": "A"}, {"text": "我更在意稳定、确定和被放在心上", "type": "B"}, {"text": "我会先观察边界和长期适配", "type": "C"}, {"text": "我需要先确认自己舒服不舒服", "type": "D"}]}, {"text": "你会不会因为孤独而进入一段不适合的关系？", "options": [{"text": "我很容易被情绪和回应牵动", "type": "A"}, {"text": "我更在意稳定、确定和被放在心上", "type": "B"}, {"text": "我会先观察边界和长期适配", "type": "C"}, {"text": "我需要先确认自己舒服不舒服", "type": "D"}]}, {"text": "你在恋爱里最容易失去哪种清醒？", "options": [{"text": "我很容易被情绪和回应牵动", "type": "A"}, {"text": "我更在意稳定、确定和被放在心上", "type": "B"}, {"text": "我会先观察边界和长期适配", "type": "C"}, {"text": "我需要先确认自己舒服不舒服", "type": "D"}]}, {"text": "你会不会把情绪价值当成全部价值？", "options": [{"text": "我很容易被情绪和回应牵动", "type": "A"}, {"text": "我更在意稳定、确定和被放在心上", "type": "B"}, {"text": "我会先观察边界和长期适配", "type": "C"}, {"text": "我需要先确认自己舒服不舒服", "type": "D"}]}, {"text": "你能不能接受一段关系没有结果？", "options": [{"text": "我很容易被情绪和回应牵动", "type": "A"}, {"text": "我更在意稳定、确定和被放在心上", "type": "B"}, {"text": "我会先观察边界和长期适配", "type": "C"}, {"text": "我需要先确认自己舒服不舒服", "type": "D"}]}, {"text": "你是否会在喜欢里保留自我边界？", "options": [{"text": "我很容易被情绪和回应牵动", "type": "A"}, {"text": "我更在意稳定、确定和被放在心上", "type": "B"}, {"text": "我会先观察边界和长期适配", "type": "C"}, {"text": "我需要先确认自己舒服不舒服", "type": "D"}]}, {"text": "你会不会反复回头找消耗你的人？", "options": [{"text": "我很容易被情绪和回应牵动", "type": "A"}, {"text": "我更在意稳定、确定和被放在心上", "type": "B"}, {"text": "我会先观察边界和长期适配", "type": "C"}, {"text": "我需要先确认自己舒服不舒服", "type": "D"}]}, {"text": "你最需要提升的是判断力、边界感，还是自我价值感？", "options": [{"text": "我很容易被情绪和回应牵动", "type": "A"}, {"text": "我更在意稳定、确定和被放在心上", "type": "B"}, {"text": "我会先观察边界和长期适配", "type": "C"}, {"text": "我需要先确认自己舒服不舒服", "type": "D"}]}, {"text": "你在关系里能不能做到“不靠猜”？", "options": [{"text": "我很容易被情绪和回应牵动", "type": "A"}, {"text": "我更在意稳定、确定和被放在心上", "type": "B"}, {"text": "我会先观察边界和长期适配", "type": "C"}, {"text": "我需要先确认自己舒服不舒服", "type": "D"}]}, {"text": "你是否能分辨对方爱你，还是只享受被你爱？", "options": [{"text": "我很容易被情绪和回应牵动", "type": "A"}, {"text": "我更在意稳定、确定和被放在心上", "type": "B"}, {"text": "我会先观察边界和长期适配", "type": "C"}, {"text": "我需要先确认自己舒服不舒服", "type": "D"}]}, {"text": "你现在的恋爱清醒度最像哪一级？", "options": [{"text": "我很容易被情绪和回应牵动", "type": "A"}, {"text": "我更在意稳定、确定和被放在心上", "type": "B"}, {"text": "我会先观察边界和长期适配", "type": "C"}, {"text": "我需要先确认自己舒服不舒服", "type": "D"}]}, {"text": "做完这个测试，你最想知道自己在爱情里有多清醒？", "options": [{"text": "我很容易被情绪和回应牵动", "type": "A"}, {"text": "我更在意稳定、确定和被放在心上", "type": "B"}, {"text": "我会先观察边界和长期适配", "type": "C"}, {"text": "我需要先确认自己舒服不舒服", "type": "D"}]}], "results": {"A": {"name": "情绪上头型", "summary": "你很容易被对方的回应、距离和态度牵动。", "sections": ["你的喜欢很真，也很投入，但要小心把不确定感当成心动。真正适合你的关系，不该让你一直猜。", "你可以把这个结果当成一个提醒：不是给自己贴标签，而是看清现在最值得调整的地方。", "接下来 7 天，选一个最小行动去验证它。真正有用的测试，不是让你立刻改变人生，而是让你更愿意靠近自己。"]}, "B": {"name": "稳定安全型", "summary": "你最需要的是被认真对待和稳定放在心上。", "sections": ["你适合长期、清晰、有行动感的关系。比起刺激，你更需要一个说到做到、持续回应你的人。", "你可以把这个结果当成一个提醒：不是给自己贴标签，而是看清现在最值得调整的地方。", "接下来 7 天，选一个最小行动去验证它。真正有用的测试，不是让你立刻改变人生，而是让你更愿意靠近自己。"]}, "C": {"name": "清醒观察型", "summary": "你会心动，但也会看这个人值不值得长期相处。", "sections": ["你的判断力是优势。只是别让过度理性把真实感受全部压掉，合适也需要一点松弛和靠近。", "你可以把这个结果当成一个提醒：不是给自己贴标签，而是看清现在最值得调整的地方。", "接下来 7 天，选一个最小行动去验证它。真正有用的测试，不是让你立刻改变人生，而是让你更愿意靠近自己。"]}, "D": {"name": "自我边界型", "summary": "你正在学会把注意力从对方身上收回自己。", "sections": ["你真正需要的关系，是让你更像自己，而不是一直委屈、讨好、证明。你的边界感会帮你筛掉不适合的人。", "你可以把这个结果当成一个提醒：不是给自己贴标签，而是看清现在最值得调整的地方。", "接下来 7 天，选一个最小行动去验证它。真正有用的测试，不是让你立刻改变人生，而是让你更愿意靠近自己。"]}}};
+    let current = 0;
+    let answers = [];
+
+    function show(id) {
+      document.getElementById("start").classList.add("hidden");
+      document.getElementById("quiz").classList.add("hidden");
+      document.getElementById("result").classList.add("hidden");
+      document.getElementById(id).classList.remove("hidden");
+    }
+
+    function startTest() {
+      current = 0;
+      answers = [];
+      show("quiz");
+      renderQuestion();
+    }
+
+    function renderQuestion() {
+      const q = TEST.questions[current];
+      document.getElementById("count").textContent = `第 ${current + 1} / ${TEST.questions.length} 题`;
+      document.getElementById("bar").style.width = `${(current / TEST.questions.length) * 100}%`;
+      document.getElementById("question").textContent = q.text;
+      document.getElementById("options").innerHTML = q.options.map((opt, index) => `
+        <button class="option" onclick="chooseOption('${opt.type}')">${String.fromCharCode(65 + index)}. ${opt.text}</button>
+      `).join("");
+    }
+
+    function chooseOption(type) {
+      answers[current] = type;
+      if (current < TEST.questions.length - 1) {
+        current += 1;
+        renderQuestion();
+      } else {
+        showResult();
+      }
+    }
+
+    function goBack() {
+      if (current === 0) {
+        show("start");
+        return;
+      }
+      current -= 1;
+      renderQuestion();
+    }
+
+    function showResult() {
+      const scores = { A: 0, B: 0, C: 0, D: 0 };
+      answers.forEach(type => scores[type] += 1);
+      const winner = Object.keys(scores).sort((a, b) => scores[b] - scores[a])[0];
+      const result = TEST.results[winner];
+      document.getElementById("bar").style.width = "100%";
+      document.getElementById("result").innerHTML = `
+        <div class="question-count">你的测试结果</div>
+        <div class="result-title">${result.name}</div>
+        <div class="result-summary">${result.summary}</div>
+        ${result.sections.map(section => `<div class="result-section">${section}</div>`).join("")}
+        <div class="share">适合截图分享的一句话：恋爱清醒不是不心动，而是心动时也没有弄丢自己。</div>
+        <div class="actions">
+          <button class="primary" onclick="startTest()">重新测试</button>
+        </div>
+      `;
+      show("result");
+    }
+  </script>
+</body>
+</html>

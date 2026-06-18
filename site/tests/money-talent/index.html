@@ -1,0 +1,332 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>一分钟测出你天生适合靠什么赚钱！</title>
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", sans-serif;
+      color: #2f3633;
+      background: linear-gradient(180deg, #f6f4ee 0%, #fbfaf6 48%, #eef3ed 100%);
+      line-height: 1.7;
+    }
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background:
+        radial-gradient(circle at 18% 10%, rgba(255, 199, 216, 0.36), transparent 28%),
+        radial-gradient(circle at 86% 18%, rgba(223, 232, 218, 0.55), transparent 24%),
+        radial-gradient(circle at 50% 92%, rgba(196, 212, 196, 0.32), transparent 32%);
+      z-index: -1;
+    }
+    .page {
+      width: min(760px, 100%);
+      margin: 0 auto;
+      padding: 44px 22px 56px;
+    }
+    .hero {
+      padding: 28px 0 26px;
+      text-align: center;
+    }
+    .tag {
+      display: inline-block;
+      padding: 0;
+      background: transparent;
+      color: #6f7d75;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      font-size: 15px;
+      letter-spacing: 0.2em;
+      margin-bottom: 36px;
+    }
+    h1 {
+      margin: 0;
+      font-size: clamp(34px, 7vw, 48px);
+      line-height: 1.25;
+      letter-spacing: 0;
+      font-weight: 900;
+    }
+    .subtitle {
+      margin: 24px 0 0;
+      color: #6f756f;
+      font-size: clamp(18px, 4.5vw, 24px);
+      font-weight: 700;
+      line-height: 1.65;
+    }
+    .divider {
+      width: 92px;
+      height: 1px;
+      background: #cfd5d8;
+      margin: 44px auto 0;
+    }
+    .panel {
+      background: rgba(255, 255, 255, 0.78);
+      border: 1px solid rgba(126, 146, 132, 0.34);
+      border-radius: 18px;
+      padding: 28px;
+      box-shadow: 0 18px 44px rgba(65, 78, 68, 0.12);
+      backdrop-filter: blur(10px);
+    }
+    .intro-panel {
+      background: transparent;
+      border: 0;
+      box-shadow: none;
+      padding: 20px 0 0;
+      font-size: clamp(17px, 4.2vw, 22px);
+      color: #654654;
+      line-height: 1.95;
+    }
+    .intro-panel p {
+      margin: 0 0 22px;
+    }
+    .value {
+      margin-top: 22px;
+      color: #2f3633;
+      font-weight: 850;
+    }
+    .dimensions {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px;
+      margin: 36px 0 34px;
+    }
+    .dimension {
+      border: 1px solid rgba(215, 140, 166, 0.42);
+      background: rgba(255, 255, 255, 0.56);
+      color: #9b5c73;
+      min-height: 62px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: clamp(16px, 4vw, 20px);
+      font-weight: 750;
+      border-radius: 14px;
+    }
+    .notice {
+      margin: 24px 0 0;
+      color: #7d847e;
+      font-size: 14px;
+    }
+    .progress {
+      height: 8px;
+      background: #dfe7dd;
+      border-radius: 999px;
+      overflow: hidden;
+      margin: 18px 0;
+    }
+    .bar {
+      height: 100%;
+      width: 0;
+      background: #43524a;
+      transition: width .25s ease;
+    }
+    .question-count {
+      color: #7d847e;
+      font-size: 14px;
+      margin-bottom: 8px;
+    }
+    .question {
+      font-size: 20px;
+      font-weight: 700;
+      margin-bottom: 16px;
+    }
+    .option {
+      width: 100%;
+      text-align: left;
+      border: 1px solid rgba(126, 146, 132, 0.34);
+      background: rgba(255, 255, 255, 0.76);
+      color: #2f3633;
+      padding: 14px 14px;
+      border-radius: 8px;
+      margin: 10px 0;
+      font-size: 16px;
+      cursor: pointer;
+    }
+    .option:hover {
+      border-color: #43524a;
+      background: #eef4ee;
+    }
+    .actions {
+      display: flex;
+      gap: 10px;
+      margin-top: 16px;
+    }
+    button.primary, button.secondary {
+      border: 0;
+      border-radius: 16px;
+      padding: 18px 16px;
+      font-size: 22px;
+      font-weight: 850;
+      cursor: pointer;
+    }
+    .primary {
+      background: #43524a;
+      color: #fffdf7;
+      width: 100%;
+      box-shadow: 0 14px 30px rgba(200, 93, 132, 0.24);
+    }
+    .secondary {
+      background: #e7ebe5;
+      color: #4f5c55;
+    }
+    .result-title {
+      font-size: 24px;
+      font-weight: 800;
+      margin: 4px 0 8px;
+    }
+    .result-summary {
+      color: #4f685b;
+      font-weight: 700;
+      margin-bottom: 16px;
+    }
+    .result-section {
+      border-top: 1px solid rgba(126, 146, 132, 0.34);
+      padding-top: 14px;
+      margin-top: 14px;
+    }
+    .share {
+      background: rgba(240, 246, 239, 0.88);
+      border-left: 4px solid #43524a;
+      padding: 12px;
+      border-radius: 6px;
+      margin-top: 18px;
+    }
+    .hidden { display: none; }
+    .footer {
+      text-align: center;
+      color: #7d847e;
+      font-size: 12px;
+      margin-top: 26px;
+    }
+    @media (max-width: 520px) {
+      .page {
+        padding: 36px 24px 48px;
+      }
+      .panel {
+        padding: 22px;
+      }
+      .dimensions {
+        gap: 10px;
+      }
+      .dimension {
+        min-height: 54px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <section class="hero">
+      <span class="tag">• MONEY TALENT CHECK •</span>
+      <h1>一分钟测出你天生适合靠什么赚钱！</h1>
+      <div class="subtitle">
+      <div>30 道题，看见你最容易变现的能力</div>
+      <div>不用纠结标准答案，凭第一感觉选就好。</div>
+      </div>
+      <div class="divider"></div>
+    </section>
+
+    <section id="start" class="intro-panel">
+      <p>很多人不是赚不到钱，而是不知道自己最适合靠什么赚钱。</p>
+      <p>有的人适合内容表达，有的人适合服务陪伴，有的人适合整合资源，有的人适合把技能产品化。</p>
+      <p>这个测试会帮你看见：你最值得放大的赚钱能力是什么。</p>
+      <p class="value">这个测试会从表达能力、服务能力、资源整合、产品化能力四个维度，帮你找到更适合自己的变现方向。</p>
+
+      <div class="dimensions">
+        <div class="dimension">表达能力</div>
+        <div class="dimension">服务能力</div>
+        <div class="dimension">资源整合</div>
+        <div class="dimension">产品化能力</div>
+      </div>
+      <button class="primary" onclick="startTest()">开始测试</button>
+      <p class="notice">娱乐测试，仅供自我探索参考，不构成心理或职业诊断。</p>
+    </section>
+
+    <section id="quiz" class="panel hidden">
+      <div class="question-count" id="count"></div>
+      <div class="progress"><div class="bar" id="bar"></div></div>
+      <div class="question" id="question"></div>
+      <div id="options"></div>
+      <div class="actions">
+        <button class="secondary" onclick="goBack()">上一题</button>
+      </div>
+    </section>
+
+    <section id="result" class="panel hidden"></section>
+
+    <div class="footer">生成时间：2026-06-19 00:36</div>
+  </main>
+
+  <script>
+    const TEST = {"slug": "money-talent", "theme": "一分钟测出你天生适合靠什么赚钱！", "eyebrow": "MONEY TALENT CHECK", "title": "一分钟测出你天生适合靠什么赚钱！", "subtitle": "30 道题，看见你最容易变现的能力", "subtitle_lines": ["30 道题，看见你最容易变现的能力", "不用纠结标准答案，凭第一感觉选就好。"], "price_hint": "娱乐测试，仅供自我探索参考，不构成心理或职业诊断。", "intro": "很多人不是赚不到钱，而是不知道自己最适合靠什么赚钱。", "intro_paragraphs": ["很多人不是赚不到钱，而是不知道自己最适合靠什么赚钱。", "有的人适合内容表达，有的人适合服务陪伴，有的人适合整合资源，有的人适合把技能产品化。", "这个测试会帮你看见：你最值得放大的赚钱能力是什么。"], "value_statement": "这个测试会从表达能力、服务能力、资源整合、产品化能力四个维度，帮你找到更适合自己的变现方向。", "dimensions": ["表达能力", "服务能力", "资源整合", "产品化能力"], "style": "neutral-pace", "share_line": "你不是没有赚钱能力，只是可能还没把最轻松的能力放到正确位置。", "questions": [{"text": "你最容易靠什么获得别人认可？", "options": [{"text": "我适合靠表达、内容和影响力放大价值", "type": "A"}, {"text": "我适合靠服务、陪伴和解决具体问题变现", "type": "B"}, {"text": "我适合靠资源整合、信息差和链接机会赚钱", "type": "C"}, {"text": "我适合把技能、经验或审美做成产品", "type": "D"}]}, {"text": "你做什么事情时最容易进入心流？", "options": [{"text": "我适合靠表达、内容和影响力放大价值", "type": "A"}, {"text": "我适合靠服务、陪伴和解决具体问题变现", "type": "B"}, {"text": "我适合靠资源整合、信息差和链接机会赚钱", "type": "C"}, {"text": "我适合把技能、经验或审美做成产品", "type": "D"}]}, {"text": "别人通常会因为什么来找你帮忙？", "options": [{"text": "我适合靠表达、内容和影响力放大价值", "type": "A"}, {"text": "我适合靠服务、陪伴和解决具体问题变现", "type": "B"}, {"text": "我适合靠资源整合、信息差和链接机会赚钱", "type": "C"}, {"text": "我适合把技能、经验或审美做成产品", "type": "D"}]}, {"text": "你更擅长表达、执行、观察，还是整合资源？", "options": [{"text": "我适合靠表达、内容和影响力放大价值", "type": "A"}, {"text": "我适合靠服务、陪伴和解决具体问题变现", "type": "B"}, {"text": "我适合靠资源整合、信息差和链接机会赚钱", "type": "C"}, {"text": "我适合把技能、经验或审美做成产品", "type": "D"}]}, {"text": "你对赚钱的第一反应是兴趣、压力，还是机会？", "options": [{"text": "我适合靠表达、内容和影响力放大价值", "type": "A"}, {"text": "我适合靠服务、陪伴和解决具体问题变现", "type": "B"}, {"text": "我适合靠资源整合、信息差和链接机会赚钱", "type": "C"}, {"text": "我适合把技能、经验或审美做成产品", "type": "D"}]}, {"text": "你更适合卖产品、卖服务，还是卖内容？", "options": [{"text": "我适合靠表达、内容和影响力放大价值", "type": "A"}, {"text": "我适合靠服务、陪伴和解决具体问题变现", "type": "B"}, {"text": "我适合靠资源整合、信息差和链接机会赚钱", "type": "C"}, {"text": "我适合把技能、经验或审美做成产品", "type": "D"}]}, {"text": "你是更擅长面对人，还是面对系统和流程？", "options": [{"text": "我适合靠表达、内容和影响力放大价值", "type": "A"}, {"text": "我适合靠服务、陪伴和解决具体问题变现", "type": "B"}, {"text": "我适合靠资源整合、信息差和链接机会赚钱", "type": "C"}, {"text": "我适合把技能、经验或审美做成产品", "type": "D"}]}, {"text": "你能不能长期重复做一件小事？", "options": [{"text": "我适合靠表达、内容和影响力放大价值", "type": "A"}, {"text": "我适合靠服务、陪伴和解决具体问题变现", "type": "B"}, {"text": "我适合靠资源整合、信息差和链接机会赚钱", "type": "C"}, {"text": "我适合把技能、经验或审美做成产品", "type": "D"}]}, {"text": "你更喜欢稳定收入，还是项目型收入？", "options": [{"text": "我适合靠表达、内容和影响力放大价值", "type": "A"}, {"text": "我适合靠服务、陪伴和解决具体问题变现", "type": "B"}, {"text": "我适合靠资源整合、信息差和链接机会赚钱", "type": "C"}, {"text": "我适合把技能、经验或审美做成产品", "type": "D"}]}, {"text": "你最能承受哪种赚钱方式的压力？", "options": [{"text": "我适合靠表达、内容和影响力放大价值", "type": "A"}, {"text": "我适合靠服务、陪伴和解决具体问题变现", "type": "B"}, {"text": "我适合靠资源整合、信息差和链接机会赚钱", "type": "C"}, {"text": "我适合把技能、经验或审美做成产品", "type": "D"}]}, {"text": "你是否愿意公开表达自己的观点？", "options": [{"text": "我适合靠表达、内容和影响力放大价值", "type": "A"}, {"text": "我适合靠服务、陪伴和解决具体问题变现", "type": "B"}, {"text": "我适合靠资源整合、信息差和链接机会赚钱", "type": "C"}, {"text": "我适合把技能、经验或审美做成产品", "type": "D"}]}, {"text": "你更容易在专业能力、人际关系，还是内容影响力里变现？", "options": [{"text": "我适合靠表达、内容和影响力放大价值", "type": "A"}, {"text": "我适合靠服务、陪伴和解决具体问题变现", "type": "B"}, {"text": "我适合靠资源整合、信息差和链接机会赚钱", "type": "C"}, {"text": "我适合把技能、经验或审美做成产品", "type": "D"}]}, {"text": "你有什么能力是别人觉得普通，但你做起来很轻松的？", "options": [{"text": "我适合靠表达、内容和影响力放大价值", "type": "A"}, {"text": "我适合靠服务、陪伴和解决具体问题变现", "type": "B"}, {"text": "我适合靠资源整合、信息差和链接机会赚钱", "type": "C"}, {"text": "我适合把技能、经验或审美做成产品", "type": "D"}]}, {"text": "你更适合做前台型角色，还是幕后型角色？", "options": [{"text": "我适合靠表达、内容和影响力放大价值", "type": "A"}, {"text": "我适合靠服务、陪伴和解决具体问题变现", "type": "B"}, {"text": "我适合靠资源整合、信息差和链接机会赚钱", "type": "C"}, {"text": "我适合把技能、经验或审美做成产品", "type": "D"}]}, {"text": "你对风险的接受程度有多高？", "options": [{"text": "我适合靠表达、内容和影响力放大价值", "type": "A"}, {"text": "我适合靠服务、陪伴和解决具体问题变现", "type": "B"}, {"text": "我适合靠资源整合、信息差和链接机会赚钱", "type": "C"}, {"text": "我适合把技能、经验或审美做成产品", "type": "D"}]}, {"text": "你有没有把自己的某种天赋长期低估？", "options": [{"text": "我适合靠表达、内容和影响力放大价值", "type": "A"}, {"text": "我适合靠服务、陪伴和解决具体问题变现", "type": "B"}, {"text": "我适合靠资源整合、信息差和链接机会赚钱", "type": "C"}, {"text": "我适合把技能、经验或审美做成产品", "type": "D"}]}, {"text": "你适合靠审美、逻辑、陪伴，还是信息差赚钱？", "options": [{"text": "我适合靠表达、内容和影响力放大价值", "type": "A"}, {"text": "我适合靠服务、陪伴和解决具体问题变现", "type": "B"}, {"text": "我适合靠资源整合、信息差和链接机会赚钱", "type": "C"}, {"text": "我适合把技能、经验或审美做成产品", "type": "D"}]}, {"text": "你更擅长发现需求，还是解决问题？", "options": [{"text": "我适合靠表达、内容和影响力放大价值", "type": "A"}, {"text": "我适合靠服务、陪伴和解决具体问题变现", "type": "B"}, {"text": "我适合靠资源整合、信息差和链接机会赚钱", "type": "C"}, {"text": "我适合把技能、经验或审美做成产品", "type": "D"}]}, {"text": "你能不能把经验整理成方法？", "options": [{"text": "我适合靠表达、内容和影响力放大价值", "type": "A"}, {"text": "我适合靠服务、陪伴和解决具体问题变现", "type": "B"}, {"text": "我适合靠资源整合、信息差和链接机会赚钱", "type": "C"}, {"text": "我适合把技能、经验或审美做成产品", "type": "D"}]}, {"text": "你更愿意做个人品牌，还是做项目协作？", "options": [{"text": "我适合靠表达、内容和影响力放大价值", "type": "A"}, {"text": "我适合靠服务、陪伴和解决具体问题变现", "type": "B"}, {"text": "我适合靠资源整合、信息差和链接机会赚钱", "type": "C"}, {"text": "我适合把技能、经验或审美做成产品", "type": "D"}]}, {"text": "你最容易在哪种场景里被信任？", "options": [{"text": "我适合靠表达、内容和影响力放大价值", "type": "A"}, {"text": "我适合靠服务、陪伴和解决具体问题变现", "type": "B"}, {"text": "我适合靠资源整合、信息差和链接机会赚钱", "type": "C"}, {"text": "我适合把技能、经验或审美做成产品", "type": "D"}]}, {"text": "你现在最大的赚钱阻碍是什么？", "options": [{"text": "我适合靠表达、内容和影响力放大价值", "type": "A"}, {"text": "我适合靠服务、陪伴和解决具体问题变现", "type": "B"}, {"text": "我适合靠资源整合、信息差和链接机会赚钱", "type": "C"}, {"text": "我适合把技能、经验或审美做成产品", "type": "D"}]}, {"text": "你更适合慢慢积累，还是快速试错？", "options": [{"text": "我适合靠表达、内容和影响力放大价值", "type": "A"}, {"text": "我适合靠服务、陪伴和解决具体问题变现", "type": "B"}, {"text": "我适合靠资源整合、信息差和链接机会赚钱", "type": "C"}, {"text": "我适合把技能、经验或审美做成产品", "type": "D"}]}, {"text": "你有没有适合变现但一直没开始的能力？", "options": [{"text": "我适合靠表达、内容和影响力放大价值", "type": "A"}, {"text": "我适合靠服务、陪伴和解决具体问题变现", "type": "B"}, {"text": "我适合靠资源整合、信息差和链接机会赚钱", "type": "C"}, {"text": "我适合把技能、经验或审美做成产品", "type": "D"}]}, {"text": "你对“靠自己赚钱”最期待的是什么？", "options": [{"text": "我适合靠表达、内容和影响力放大价值", "type": "A"}, {"text": "我适合靠服务、陪伴和解决具体问题变现", "type": "B"}, {"text": "我适合靠资源整合、信息差和链接机会赚钱", "type": "C"}, {"text": "我适合把技能、经验或审美做成产品", "type": "D"}]}, {"text": "你更适合高客单服务，还是低价产品批量成交？", "options": [{"text": "我适合靠表达、内容和影响力放大价值", "type": "A"}, {"text": "我适合靠服务、陪伴和解决具体问题变现", "type": "B"}, {"text": "我适合靠资源整合、信息差和链接机会赚钱", "type": "C"}, {"text": "我适合把技能、经验或审美做成产品", "type": "D"}]}, {"text": "你能不能承受前期没有结果的积累？", "options": [{"text": "我适合靠表达、内容和影响力放大价值", "type": "A"}, {"text": "我适合靠服务、陪伴和解决具体问题变现", "type": "B"}, {"text": "我适合靠资源整合、信息差和链接机会赚钱", "type": "C"}, {"text": "我适合把技能、经验或审美做成产品", "type": "D"}]}, {"text": "你最适合从哪一个小产品开始测试？", "options": [{"text": "我适合靠表达、内容和影响力放大价值", "type": "A"}, {"text": "我适合靠服务、陪伴和解决具体问题变现", "type": "B"}, {"text": "我适合靠资源整合、信息差和链接机会赚钱", "type": "C"}, {"text": "我适合把技能、经验或审美做成产品", "type": "D"}]}, {"text": "你未来一年最值得放大的能力是什么？", "options": [{"text": "我适合靠表达、内容和影响力放大价值", "type": "A"}, {"text": "我适合靠服务、陪伴和解决具体问题变现", "type": "B"}, {"text": "我适合靠资源整合、信息差和链接机会赚钱", "type": "C"}, {"text": "我适合把技能、经验或审美做成产品", "type": "D"}]}, {"text": "做完这个测试，你最想知道自己适合靠什么赚钱？", "options": [{"text": "我适合靠表达、内容和影响力放大价值", "type": "A"}, {"text": "我适合靠服务、陪伴和解决具体问题变现", "type": "B"}, {"text": "我适合靠资源整合、信息差和链接机会赚钱", "type": "C"}, {"text": "我适合把技能、经验或审美做成产品", "type": "D"}]}], "results": {"A": {"name": "内容表达型", "summary": "你适合靠表达、观点、审美或内容影响力赚钱。", "sections": ["你需要把自己的经验和观察稳定输出。低价产品、测评、咨询入口、内容账号都适合作为起步方式。", "你可以把这个结果当成一个提醒：不是给自己贴标签，而是看清现在最值得调整的地方。", "接下来 7 天，选一个最小行动去验证它。真正有用的测试，不是让你立刻改变人生，而是让你更愿意靠近自己。"]}, "B": {"name": "服务陪伴型", "summary": "你适合靠解决具体问题和提供陪伴型服务变现。", "sections": ["你的价值在于让别人感觉被理解、被带着走。适合做咨询、陪跑、社群服务或细分人群方案。", "你可以把这个结果当成一个提醒：不是给自己贴标签，而是看清现在最值得调整的地方。", "接下来 7 天，选一个最小行动去验证它。真正有用的测试，不是让你立刻改变人生，而是让你更愿意靠近自己。"]}, "C": {"name": "资源整合型", "summary": "你适合靠信息差、链接能力和项目协作赚钱。", "sections": ["你不一定要亲自做所有事，但你要学会发现需求、组织资源、促成成交。", "你可以把这个结果当成一个提醒：不是给自己贴标签，而是看清现在最值得调整的地方。", "接下来 7 天，选一个最小行动去验证它。真正有用的测试，不是让你立刻改变人生，而是让你更愿意靠近自己。"]}, "D": {"name": "技能产品型", "summary": "你适合把技能、方法或经验打包成可重复交付的产品。", "sections": ["你的优势在于把复杂东西整理清楚。适合做模板、工具包、课程、小程序或标准化服务。", "你可以把这个结果当成一个提醒：不是给自己贴标签，而是看清现在最值得调整的地方。", "接下来 7 天，选一个最小行动去验证它。真正有用的测试，不是让你立刻改变人生，而是让你更愿意靠近自己。"]}}};
+    let current = 0;
+    let answers = [];
+
+    function show(id) {
+      document.getElementById("start").classList.add("hidden");
+      document.getElementById("quiz").classList.add("hidden");
+      document.getElementById("result").classList.add("hidden");
+      document.getElementById(id).classList.remove("hidden");
+    }
+
+    function startTest() {
+      current = 0;
+      answers = [];
+      show("quiz");
+      renderQuestion();
+    }
+
+    function renderQuestion() {
+      const q = TEST.questions[current];
+      document.getElementById("count").textContent = `第 ${current + 1} / ${TEST.questions.length} 题`;
+      document.getElementById("bar").style.width = `${(current / TEST.questions.length) * 100}%`;
+      document.getElementById("question").textContent = q.text;
+      document.getElementById("options").innerHTML = q.options.map((opt, index) => `
+        <button class="option" onclick="chooseOption('${opt.type}')">${String.fromCharCode(65 + index)}. ${opt.text}</button>
+      `).join("");
+    }
+
+    function chooseOption(type) {
+      answers[current] = type;
+      if (current < TEST.questions.length - 1) {
+        current += 1;
+        renderQuestion();
+      } else {
+        showResult();
+      }
+    }
+
+    function goBack() {
+      if (current === 0) {
+        show("start");
+        return;
+      }
+      current -= 1;
+      renderQuestion();
+    }
+
+    function showResult() {
+      const scores = { A: 0, B: 0, C: 0, D: 0 };
+      answers.forEach(type => scores[type] += 1);
+      const winner = Object.keys(scores).sort((a, b) => scores[b] - scores[a])[0];
+      const result = TEST.results[winner];
+      document.getElementById("bar").style.width = "100%";
+      document.getElementById("result").innerHTML = `
+        <div class="question-count">你的测试结果</div>
+        <div class="result-title">${result.name}</div>
+        <div class="result-summary">${result.summary}</div>
+        ${result.sections.map(section => `<div class="result-section">${section}</div>`).join("")}
+        <div class="share">适合截图分享的一句话：你不是没有赚钱能力，只是可能还没把最轻松的能力放到正确位置。</div>
+        <div class="actions">
+          <button class="primary" onclick="startTest()">重新测试</button>
+        </div>
+      `;
+      show("result");
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,332 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>你会被哪种人反复拿捏？</title>
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", sans-serif;
+      color: #4a2935;
+      background: linear-gradient(180deg, #fff4f7 0%, #fff9fb 46%, #fff2ee 100%);
+      line-height: 1.7;
+    }
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background:
+        radial-gradient(circle at 18% 10%, rgba(255, 199, 216, 0.36), transparent 28%),
+        radial-gradient(circle at 86% 18%, rgba(223, 232, 218, 0.55), transparent 24%),
+        radial-gradient(circle at 50% 92%, rgba(196, 212, 196, 0.32), transparent 32%);
+      z-index: -1;
+    }
+    .page {
+      width: min(760px, 100%);
+      margin: 0 auto;
+      padding: 44px 22px 56px;
+    }
+    .hero {
+      padding: 28px 0 26px;
+      text-align: center;
+    }
+    .tag {
+      display: inline-block;
+      padding: 0;
+      background: transparent;
+      color: #bd6d87;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      font-size: 15px;
+      letter-spacing: 0.2em;
+      margin-bottom: 36px;
+    }
+    h1 {
+      margin: 0;
+      font-size: clamp(34px, 7vw, 48px);
+      line-height: 1.25;
+      letter-spacing: 0;
+      font-weight: 900;
+    }
+    .subtitle {
+      margin: 24px 0 0;
+      color: #8d6675;
+      font-size: clamp(18px, 4.5vw, 24px);
+      font-weight: 700;
+      line-height: 1.65;
+    }
+    .divider {
+      width: 92px;
+      height: 1px;
+      background: #cfd5d8;
+      margin: 44px auto 0;
+    }
+    .panel {
+      background: rgba(255, 255, 255, 0.78);
+      border: 1px solid rgba(232, 166, 188, 0.42);
+      border-radius: 18px;
+      padding: 28px;
+      box-shadow: 0 18px 48px rgba(190, 87, 124, 0.14);
+      backdrop-filter: blur(10px);
+    }
+    .intro-panel {
+      background: transparent;
+      border: 0;
+      box-shadow: none;
+      padding: 20px 0 0;
+      font-size: clamp(17px, 4.2vw, 22px);
+      color: #654654;
+      line-height: 1.95;
+    }
+    .intro-panel p {
+      margin: 0 0 22px;
+    }
+    .value {
+      margin-top: 22px;
+      color: #4a2935;
+      font-weight: 850;
+    }
+    .dimensions {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px;
+      margin: 36px 0 34px;
+    }
+    .dimension {
+      border: 1px solid rgba(215, 140, 166, 0.42);
+      background: rgba(255, 255, 255, 0.56);
+      color: #9b5c73;
+      min-height: 62px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: clamp(16px, 4vw, 20px);
+      font-weight: 750;
+      border-radius: 14px;
+    }
+    .notice {
+      margin: 24px 0 0;
+      color: #a27a88;
+      font-size: 14px;
+    }
+    .progress {
+      height: 8px;
+      background: #f6d8e2;
+      border-radius: 999px;
+      overflow: hidden;
+      margin: 18px 0;
+    }
+    .bar {
+      height: 100%;
+      width: 0;
+      background: #c85d84;
+      transition: width .25s ease;
+    }
+    .question-count {
+      color: #a27a88;
+      font-size: 14px;
+      margin-bottom: 8px;
+    }
+    .question {
+      font-size: 20px;
+      font-weight: 700;
+      margin-bottom: 16px;
+    }
+    .option {
+      width: 100%;
+      text-align: left;
+      border: 1px solid rgba(232, 166, 188, 0.42);
+      background: rgba(255, 255, 255, 0.78);
+      color: #4a2935;
+      padding: 14px 14px;
+      border-radius: 8px;
+      margin: 10px 0;
+      font-size: 16px;
+      cursor: pointer;
+    }
+    .option:hover {
+      border-color: #c85d84;
+      background: #fff0f5;
+    }
+    .actions {
+      display: flex;
+      gap: 10px;
+      margin-top: 16px;
+    }
+    button.primary, button.secondary {
+      border: 0;
+      border-radius: 16px;
+      padding: 18px 16px;
+      font-size: 22px;
+      font-weight: 850;
+      cursor: pointer;
+    }
+    .primary {
+      background: #c85d84;
+      color: #fffafc;
+      width: 100%;
+      box-shadow: 0 14px 30px rgba(200, 93, 132, 0.24);
+    }
+    .secondary {
+      background: #f9dfe8;
+      color: #8d4260;
+    }
+    .result-title {
+      font-size: 24px;
+      font-weight: 800;
+      margin: 4px 0 8px;
+    }
+    .result-summary {
+      color: #a23e65;
+      font-weight: 700;
+      margin-bottom: 16px;
+    }
+    .result-section {
+      border-top: 1px solid rgba(232, 166, 188, 0.42);
+      padding-top: 14px;
+      margin-top: 14px;
+    }
+    .share {
+      background: rgba(255, 240, 246, 0.86);
+      border-left: 4px solid #c85d84;
+      padding: 12px;
+      border-radius: 6px;
+      margin-top: 18px;
+    }
+    .hidden { display: none; }
+    .footer {
+      text-align: center;
+      color: #a27a88;
+      font-size: 12px;
+      margin-top: 26px;
+    }
+    @media (max-width: 520px) {
+      .page {
+        padding: 36px 24px 48px;
+      }
+      .panel {
+        padding: 22px;
+      }
+      .dimensions {
+        gap: 10px;
+      }
+      .dimension {
+        min-height: 54px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <section class="hero">
+      <span class="tag">• RELATIONSHIP BLIND SPOT •</span>
+      <h1>你会被哪种人反复拿捏？</h1>
+      <div class="subtitle">
+      <div>30 道题，看清你最容易在哪种关系里失去判断</div>
+      <div>不用纠结标准答案，凭第一感觉选就好。</div>
+      </div>
+      <div class="divider"></div>
+    </section>
+
+    <section id="start" class="intro-panel">
+      <p>有些人一出现，你就很难保持原来的节奏。</p>
+      <p>你明知道对方忽冷忽热，却还是忍不住想确认自己是不是特别的那个。</p>
+      <p>这个测试会帮你看清：你到底容易被哪种人、哪种关系模式反复牵动。</p>
+      <p class="value">这个测试会从情绪牵引、上头模式、边界感、安全感需求四个维度，帮你判断你最容易被哪类人拿捏。</p>
+
+      <div class="dimensions">
+        <div class="dimension">情绪牵引</div>
+        <div class="dimension">上头模式</div>
+        <div class="dimension">边界感</div>
+        <div class="dimension">安全感需求</div>
+      </div>
+      <button class="primary" onclick="startTest()">开始测试</button>
+      <p class="notice">娱乐测试，仅供自我探索参考，不构成心理或职业诊断。</p>
+    </section>
+
+    <section id="quiz" class="panel hidden">
+      <div class="question-count" id="count"></div>
+      <div class="progress"><div class="bar" id="bar"></div></div>
+      <div class="question" id="question"></div>
+      <div id="options"></div>
+      <div class="actions">
+        <button class="secondary" onclick="goBack()">上一题</button>
+      </div>
+    </section>
+
+    <section id="result" class="panel hidden"></section>
+
+    <div class="footer">生成时间：2026-06-19 00:36</div>
+  </main>
+
+  <script>
+    const TEST = {"slug": "be-controlled", "theme": "你会被哪种人反复拿捏？", "eyebrow": "RELATIONSHIP BLIND SPOT", "title": "你会被哪种人反复拿捏？", "subtitle": "30 道题，看清你最容易在哪种关系里失去判断", "subtitle_lines": ["30 道题，看清你最容易在哪种关系里失去判断", "不用纠结标准答案，凭第一感觉选就好。"], "price_hint": "娱乐测试，仅供自我探索参考，不构成心理或职业诊断。", "intro": "有些人一出现，你就很难保持原来的节奏。", "intro_paragraphs": ["有些人一出现，你就很难保持原来的节奏。", "你明知道对方忽冷忽热，却还是忍不住想确认自己是不是特别的那个。", "这个测试会帮你看清：你到底容易被哪种人、哪种关系模式反复牵动。"], "value_statement": "这个测试会从情绪牵引、上头模式、边界感、安全感需求四个维度，帮你判断你最容易被哪类人拿捏。", "dimensions": ["情绪牵引", "上头模式", "边界感", "安全感需求"], "style": "soft-love", "share_line": "真正让你被拿捏的，往往不是对方多厉害，而是你太想被坚定选择。", "questions": [{"text": "你最容易被哪种人的一句话影响心情？", "options": [{"text": "我很容易被情绪和回应牵动", "type": "A"}, {"text": "我更在意稳定、确定和被放在心上", "type": "B"}, {"text": "我会先观察边界和长期适配", "type": "C"}, {"text": "我需要先确认自己舒服不舒服", "type": "D"}]}, {"text": "你会因为对方忽冷忽热，反而更想证明自己特别吗？", "options": [{"text": "我很容易被情绪和回应牵动", "type": "A"}, {"text": "我更在意稳定、确定和被放在心上", "type": "B"}, {"text": "我会先观察边界和长期适配", "type": "C"}, {"text": "我需要先确认自己舒服不舒服", "type": "D"}]}, {"text": "你更容易被温柔稳定的人吸引，还是被有距离感的人吸引？", "options": [{"text": "我很容易被情绪和回应牵动", "type": "A"}, {"text": "我更在意稳定、确定和被放在心上", "type": "B"}, {"text": "我会先观察边界和长期适配", "type": "C"}, {"text": "我需要先确认自己舒服不舒服", "type": "D"}]}, {"text": "对方越难猜，你会越想靠近，还是越想退出？", "options": [{"text": "我很容易被情绪和回应牵动", "type": "A"}, {"text": "我更在意稳定、确定和被放在心上", "type": "B"}, {"text": "我会先观察边界和长期适配", "type": "C"}, {"text": "我需要先确认自己舒服不舒服", "type": "D"}]}, {"text": "你在关系里最怕被忽视、被否定，还是被替代？", "options": [{"text": "我很容易被情绪和回应牵动", "type": "A"}, {"text": "我更在意稳定、确定和被放在心上", "type": "B"}, {"text": "我会先观察边界和长期适配", "type": "C"}, {"text": "我需要先确认自己舒服不舒服", "type": "D"}]}, {"text": "你有没有明知道不合适，却还是舍不得断开联系？", "options": [{"text": "我很容易被情绪和回应牵动", "type": "A"}, {"text": "我更在意稳定、确定和被放在心上", "type": "B"}, {"text": "我会先观察边界和长期适配", "type": "C"}, {"text": "我需要先确认自己舒服不舒服", "type": "D"}]}, {"text": "你会不会因为一点偏爱，就自动替对方解释很多问题？", "options": [{"text": "我很容易被情绪和回应牵动", "type": "A"}, {"text": "我更在意稳定、确定和被放在心上", "type": "B"}, {"text": "我会先观察边界和长期适配", "type": "C"}, {"text": "我需要先确认自己舒服不舒服", "type": "D"}]}, {"text": "你最容易在什么时刻对一个人上头？", "options": [{"text": "我很容易被情绪和回应牵动", "type": "A"}, {"text": "我更在意稳定、确定和被放在心上", "type": "B"}, {"text": "我会先观察边界和长期适配", "type": "C"}, {"text": "我需要先确认自己舒服不舒服", "type": "D"}]}, {"text": "你能分清对方是真的喜欢你，还是只会制造情绪波动吗？", "options": [{"text": "我很容易被情绪和回应牵动", "type": "A"}, {"text": "我更在意稳定、确定和被放在心上", "type": "B"}, {"text": "我会先观察边界和长期适配", "type": "C"}, {"text": "我需要先确认自己舒服不舒服", "type": "D"}]}, {"text": "你会被会聊天的人拿捏，还是被会冷处理的人拿捏？", "options": [{"text": "我很容易被情绪和回应牵动", "type": "A"}, {"text": "我更在意稳定、确定和被放在心上", "type": "B"}, {"text": "我会先观察边界和长期适配", "type": "C"}, {"text": "我需要先确认自己舒服不舒服", "type": "D"}]}, {"text": "你在暧昧里最容易失去判断力的瞬间是什么？", "options": [{"text": "我很容易被情绪和回应牵动", "type": "A"}, {"text": "我更在意稳定、确定和被放在心上", "type": "B"}, {"text": "我会先观察边界和长期适配", "type": "C"}, {"text": "我需要先确认自己舒服不舒服", "type": "D"}]}, {"text": "你是不是经常把“舍不得”误以为“还爱着”？", "options": [{"text": "我很容易被情绪和回应牵动", "type": "A"}, {"text": "我更在意稳定、确定和被放在心上", "type": "B"}, {"text": "我会先观察边界和长期适配", "type": "C"}, {"text": "我需要先确认自己舒服不舒服", "type": "D"}]}, {"text": "你会被强势的人吸引，还是被脆弱的人激发保护欲？", "options": [{"text": "我很容易被情绪和回应牵动", "type": "A"}, {"text": "我更在意稳定、确定和被放在心上", "type": "B"}, {"text": "我会先观察边界和长期适配", "type": "C"}, {"text": "我需要先确认自己舒服不舒服", "type": "D"}]}, {"text": "对方越不确定，你是否越想得到一个确定答案？", "options": [{"text": "我很容易被情绪和回应牵动", "type": "A"}, {"text": "我更在意稳定、确定和被放在心上", "type": "B"}, {"text": "我会先观察边界和长期适配", "type": "C"}, {"text": "我需要先确认自己舒服不舒服", "type": "D"}]}, {"text": "你在关系里最容易让渡自己的哪一部分？", "options": [{"text": "我很容易被情绪和回应牵动", "type": "A"}, {"text": "我更在意稳定、确定和被放在心上", "type": "B"}, {"text": "我会先观察边界和长期适配", "type": "C"}, {"text": "我需要先确认自己舒服不舒服", "type": "D"}]}, {"text": "你有没有因为害怕失去，而接受了不舒服的相处方式？", "options": [{"text": "我很容易被情绪和回应牵动", "type": "A"}, {"text": "我更在意稳定、确定和被放在心上", "type": "B"}, {"text": "我会先观察边界和长期适配", "type": "C"}, {"text": "我需要先确认自己舒服不舒服", "type": "D"}]}, {"text": "你最容易被哪种承诺打动？", "options": [{"text": "我很容易被情绪和回应牵动", "type": "A"}, {"text": "我更在意稳定、确定和被放在心上", "type": "B"}, {"text": "我会先观察边界和长期适配", "type": "C"}, {"text": "我需要先确认自己舒服不舒服", "type": "D"}]}, {"text": "你会被对方的价值吸引，还是被对方的情绪牵引？", "options": [{"text": "我很容易被情绪和回应牵动", "type": "A"}, {"text": "我更在意稳定、确定和被放在心上", "type": "B"}, {"text": "我会先观察边界和长期适配", "type": "C"}, {"text": "我需要先确认自己舒服不舒服", "type": "D"}]}, {"text": "你遇到喜欢的人时，会先观察，还是先投入？", "options": [{"text": "我很容易被情绪和回应牵动", "type": "A"}, {"text": "我更在意稳定、确定和被放在心上", "type": "B"}, {"text": "我会先观察边界和长期适配", "type": "C"}, {"text": "我需要先确认自己舒服不舒服", "type": "D"}]}, {"text": "你有没有发现自己总被同一种类型的人吸引？", "options": [{"text": "我很容易被情绪和回应牵动", "type": "A"}, {"text": "我更在意稳定、确定和被放在心上", "type": "B"}, {"text": "我会先观察边界和长期适配", "type": "C"}, {"text": "我需要先确认自己舒服不舒服", "type": "D"}]}, {"text": "你被拿捏时，通常是因为心软、缺爱，还是不甘心？", "options": [{"text": "我很容易被情绪和回应牵动", "type": "A"}, {"text": "我更在意稳定、确定和被放在心上", "type": "B"}, {"text": "我会先观察边界和长期适配", "type": "C"}, {"text": "我需要先确认自己舒服不舒服", "type": "D"}]}, {"text": "你能不能在关系里及时识别自己的底线？", "options": [{"text": "我很容易被情绪和回应牵动", "type": "A"}, {"text": "我更在意稳定、确定和被放在心上", "type": "B"}, {"text": "我会先观察边界和长期适配", "type": "C"}, {"text": "我需要先确认自己舒服不舒服", "type": "D"}]}, {"text": "你是容易被甜言蜜语打动，还是被实际行动打动？", "options": [{"text": "我很容易被情绪和回应牵动", "type": "A"}, {"text": "我更在意稳定、确定和被放在心上", "type": "B"}, {"text": "我会先观察边界和长期适配", "type": "C"}, {"text": "我需要先确认自己舒服不舒服", "type": "D"}]}, {"text": "当对方退一步，你会追上去，还是停下来观察？", "options": [{"text": "我很容易被情绪和回应牵动", "type": "A"}, {"text": "我更在意稳定、确定和被放在心上", "type": "B"}, {"text": "我会先观察边界和长期适配", "type": "C"}, {"text": "我需要先确认自己舒服不舒服", "type": "D"}]}, {"text": "你会因为一个人“需要你”，就误以为这是爱吗？", "options": [{"text": "我很容易被情绪和回应牵动", "type": "A"}, {"text": "我更在意稳定、确定和被放在心上", "type": "B"}, {"text": "我会先观察边界和长期适配", "type": "C"}, {"text": "我需要先确认自己舒服不舒服", "type": "D"}]}, {"text": "你最容易在关系里高估对方的哪一点？", "options": [{"text": "我很容易被情绪和回应牵动", "type": "A"}, {"text": "我更在意稳定、确定和被放在心上", "type": "B"}, {"text": "我会先观察边界和长期适配", "type": "C"}, {"text": "我需要先确认自己舒服不舒服", "type": "D"}]}, {"text": "你什么时候最容易把清醒丢掉？", "options": [{"text": "我很容易被情绪和回应牵动", "type": "A"}, {"text": "我更在意稳定、确定和被放在心上", "type": "B"}, {"text": "我会先观察边界和长期适配", "type": "C"}, {"text": "我需要先确认自己舒服不舒服", "type": "D"}]}, {"text": "你被拿捏后，最常说服自己的理由是什么？", "options": [{"text": "我很容易被情绪和回应牵动", "type": "A"}, {"text": "我更在意稳定、确定和被放在心上", "type": "B"}, {"text": "我会先观察边界和长期适配", "type": "C"}, {"text": "我需要先确认自己舒服不舒服", "type": "D"}]}, {"text": "你真正需要的关系，是刺激、陪伴，还是确定感？", "options": [{"text": "我很容易被情绪和回应牵动", "type": "A"}, {"text": "我更在意稳定、确定和被放在心上", "type": "B"}, {"text": "我会先观察边界和长期适配", "type": "C"}, {"text": "我需要先确认自己舒服不舒服", "type": "D"}]}, {"text": "做完这个测试，你最想知道自己会被哪种人反复拿捏？", "options": [{"text": "我很容易被情绪和回应牵动", "type": "A"}, {"text": "我更在意稳定、确定和被放在心上", "type": "B"}, {"text": "我会先观察边界和长期适配", "type": "C"}, {"text": "我需要先确认自己舒服不舒服", "type": "D"}]}], "results": {"A": {"name": "情绪上头型", "summary": "你很容易被对方的回应、距离和态度牵动。", "sections": ["你的喜欢很真，也很投入，但要小心把不确定感当成心动。真正适合你的关系，不该让你一直猜。", "你可以把这个结果当成一个提醒：不是给自己贴标签，而是看清现在最值得调整的地方。", "接下来 7 天，选一个最小行动去验证它。真正有用的测试，不是让你立刻改变人生，而是让你更愿意靠近自己。"]}, "B": {"name": "稳定安全型", "summary": "你最需要的是被认真对待和稳定放在心上。", "sections": ["你适合长期、清晰、有行动感的关系。比起刺激，你更需要一个说到做到、持续回应你的人。", "你可以把这个结果当成一个提醒：不是给自己贴标签，而是看清现在最值得调整的地方。", "接下来 7 天，选一个最小行动去验证它。真正有用的测试，不是让你立刻改变人生，而是让你更愿意靠近自己。"]}, "C": {"name": "清醒观察型", "summary": "你会心动，但也会看这个人值不值得长期相处。", "sections": ["你的判断力是优势。只是别让过度理性把真实感受全部压掉，合适也需要一点松弛和靠近。", "你可以把这个结果当成一个提醒：不是给自己贴标签，而是看清现在最值得调整的地方。", "接下来 7 天，选一个最小行动去验证它。真正有用的测试，不是让你立刻改变人生，而是让你更愿意靠近自己。"]}, "D": {"name": "自我边界型", "summary": "你正在学会把注意力从对方身上收回自己。", "sections": ["你真正需要的关系，是让你更像自己，而不是一直委屈、讨好、证明。你的边界感会帮你筛掉不适合的人。", "你可以把这个结果当成一个提醒：不是给自己贴标签，而是看清现在最值得调整的地方。", "接下来 7 天，选一个最小行动去验证它。真正有用的测试，不是让你立刻改变人生，而是让你更愿意靠近自己。"]}}};
+    let current = 0;
+    let answers = [];
+
+    function show(id) {
+      document.getElementById("start").classList.add("hidden");
+      document.getElementById("quiz").classList.add("hidden");
+      document.getElementById("result").classList.add("hidden");
+      document.getElementById(id).classList.remove("hidden");
+    }
+
+    function startTest() {
+      current = 0;
+      answers = [];
+      show("quiz");
+      renderQuestion();
+    }
+
+    function renderQuestion() {
+      const q = TEST.questions[current];
+      document.getElementById("count").textContent = `第 ${current + 1} / ${TEST.questions.length} 题`;
+      document.getElementById("bar").style.width = `${(current / TEST.questions.length) * 100}%`;
+      document.getElementById("question").textContent = q.text;
+      document.getElementById("options").innerHTML = q.options.map((opt, index) => `
+        <button class="option" onclick="chooseOption('${opt.type}')">${String.fromCharCode(65 + index)}. ${opt.text}</button>
+      `).join("");
+    }
+
+    function chooseOption(type) {
+      answers[current] = type;
+      if (current < TEST.questions.length - 1) {
+        current += 1;
+        renderQuestion();
+      } else {
+        showResult();
+      }
+    }
+
+    function goBack() {
+      if (current === 0) {
+        show("start");
+        return;
+      }
+      current -= 1;
+      renderQuestion();
+    }
+
+    function showResult() {
+      const scores = { A: 0, B: 0, C: 0, D: 0 };
+      answers.forEach(type => scores[type] += 1);
+      const winner = Object.keys(scores).sort((a, b) => scores[b] - scores[a])[0];
+      const result = TEST.results[winner];
+      document.getElementById("bar").style.width = "100%";
+      document.getElementById("result").innerHTML = `
+        <div class="question-count">你的测试结果</div>
+        <div class="result-title">${result.name}</div>
+        <div class="result-summary">${result.summary}</div>
+        ${result.sections.map(section => `<div class="result-section">${section}</div>`).join("")}
+        <div class="share">适合截图分享的一句话：真正让你被拿捏的，往往不是对方多厉害，而是你太想被坚定选择。</div>
+        <div class="actions">
+          <button class="primary" onclick="startTest()">重新测试</button>
+        </div>
+      `;
+      show("result");
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,332 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>你该继续硬撑，还是换一种活法？</title>
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", sans-serif;
+      color: #2f3633;
+      background: linear-gradient(180deg, #f6f4ee 0%, #fbfaf6 48%, #eef3ed 100%);
+      line-height: 1.7;
+    }
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background:
+        radial-gradient(circle at 18% 10%, rgba(255, 199, 216, 0.36), transparent 28%),
+        radial-gradient(circle at 86% 18%, rgba(223, 232, 218, 0.55), transparent 24%),
+        radial-gradient(circle at 50% 92%, rgba(196, 212, 196, 0.32), transparent 32%);
+      z-index: -1;
+    }
+    .page {
+      width: min(760px, 100%);
+      margin: 0 auto;
+      padding: 44px 22px 56px;
+    }
+    .hero {
+      padding: 28px 0 26px;
+      text-align: center;
+    }
+    .tag {
+      display: inline-block;
+      padding: 0;
+      background: transparent;
+      color: #6f7d75;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      font-size: 15px;
+      letter-spacing: 0.2em;
+      margin-bottom: 36px;
+    }
+    h1 {
+      margin: 0;
+      font-size: clamp(34px, 7vw, 48px);
+      line-height: 1.25;
+      letter-spacing: 0;
+      font-weight: 900;
+    }
+    .subtitle {
+      margin: 24px 0 0;
+      color: #6f756f;
+      font-size: clamp(18px, 4.5vw, 24px);
+      font-weight: 700;
+      line-height: 1.65;
+    }
+    .divider {
+      width: 92px;
+      height: 1px;
+      background: #cfd5d8;
+      margin: 44px auto 0;
+    }
+    .panel {
+      background: rgba(255, 255, 255, 0.78);
+      border: 1px solid rgba(126, 146, 132, 0.34);
+      border-radius: 18px;
+      padding: 28px;
+      box-shadow: 0 18px 44px rgba(65, 78, 68, 0.12);
+      backdrop-filter: blur(10px);
+    }
+    .intro-panel {
+      background: transparent;
+      border: 0;
+      box-shadow: none;
+      padding: 20px 0 0;
+      font-size: clamp(17px, 4.2vw, 22px);
+      color: #654654;
+      line-height: 1.95;
+    }
+    .intro-panel p {
+      margin: 0 0 22px;
+    }
+    .value {
+      margin-top: 22px;
+      color: #2f3633;
+      font-weight: 850;
+    }
+    .dimensions {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px;
+      margin: 36px 0 34px;
+    }
+    .dimension {
+      border: 1px solid rgba(215, 140, 166, 0.42);
+      background: rgba(255, 255, 255, 0.56);
+      color: #9b5c73;
+      min-height: 62px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: clamp(16px, 4vw, 20px);
+      font-weight: 750;
+      border-radius: 14px;
+    }
+    .notice {
+      margin: 24px 0 0;
+      color: #7d847e;
+      font-size: 14px;
+    }
+    .progress {
+      height: 8px;
+      background: #dfe7dd;
+      border-radius: 999px;
+      overflow: hidden;
+      margin: 18px 0;
+    }
+    .bar {
+      height: 100%;
+      width: 0;
+      background: #43524a;
+      transition: width .25s ease;
+    }
+    .question-count {
+      color: #7d847e;
+      font-size: 14px;
+      margin-bottom: 8px;
+    }
+    .question {
+      font-size: 20px;
+      font-weight: 700;
+      margin-bottom: 16px;
+    }
+    .option {
+      width: 100%;
+      text-align: left;
+      border: 1px solid rgba(126, 146, 132, 0.34);
+      background: rgba(255, 255, 255, 0.76);
+      color: #2f3633;
+      padding: 14px 14px;
+      border-radius: 8px;
+      margin: 10px 0;
+      font-size: 16px;
+      cursor: pointer;
+    }
+    .option:hover {
+      border-color: #43524a;
+      background: #eef4ee;
+    }
+    .actions {
+      display: flex;
+      gap: 10px;
+      margin-top: 16px;
+    }
+    button.primary, button.secondary {
+      border: 0;
+      border-radius: 16px;
+      padding: 18px 16px;
+      font-size: 22px;
+      font-weight: 850;
+      cursor: pointer;
+    }
+    .primary {
+      background: #43524a;
+      color: #fffdf7;
+      width: 100%;
+      box-shadow: 0 14px 30px rgba(200, 93, 132, 0.24);
+    }
+    .secondary {
+      background: #e7ebe5;
+      color: #4f5c55;
+    }
+    .result-title {
+      font-size: 24px;
+      font-weight: 800;
+      margin: 4px 0 8px;
+    }
+    .result-summary {
+      color: #4f685b;
+      font-weight: 700;
+      margin-bottom: 16px;
+    }
+    .result-section {
+      border-top: 1px solid rgba(126, 146, 132, 0.34);
+      padding-top: 14px;
+      margin-top: 14px;
+    }
+    .share {
+      background: rgba(240, 246, 239, 0.88);
+      border-left: 4px solid #43524a;
+      padding: 12px;
+      border-radius: 6px;
+      margin-top: 18px;
+    }
+    .hidden { display: none; }
+    .footer {
+      text-align: center;
+      color: #7d847e;
+      font-size: 12px;
+      margin-top: 26px;
+    }
+    @media (max-width: 520px) {
+      .page {
+        padding: 36px 24px 48px;
+      }
+      .panel {
+        padding: 22px;
+      }
+      .dimensions {
+        gap: 10px;
+      }
+      .dimension {
+        min-height: 54px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <section class="hero">
+      <span class="tag">• LIFE RESET CHECK •</span>
+      <h1>你该继续硬撑，还是换一种活法？</h1>
+      <div class="subtitle">
+      <div>30 道题，看清你现在是该坚持，还是该转向</div>
+      <div>不用纠结标准答案，凭第一感觉选就好。</div>
+      </div>
+      <div class="divider"></div>
+    </section>
+
+    <section id="start" class="intro-panel">
+      <p>你有没有过这种感觉：每天都在往前走，却越来越不像自己。</p>
+      <p>你说服自己再坚持一下，可身体和情绪已经开始悄悄提醒你。</p>
+      <p>这个测试会帮你分清：你是在真正深耕，还是在硬撑一段不适合的生活。</p>
+      <p class="value">这个测试会从能量状态、方向适配、现实压力、转向勇气四个维度，帮你判断：你现在更适合继续撑住，还是换一种活法。</p>
+
+      <div class="dimensions">
+        <div class="dimension">能量状态</div>
+        <div class="dimension">方向适配</div>
+        <div class="dimension">现实压力</div>
+        <div class="dimension">转向勇气</div>
+      </div>
+      <button class="primary" onclick="startTest()">开始测试</button>
+      <p class="notice">娱乐测试，仅供自我探索参考，不构成心理或职业诊断。</p>
+    </section>
+
+    <section id="quiz" class="panel hidden">
+      <div class="question-count" id="count"></div>
+      <div class="progress"><div class="bar" id="bar"></div></div>
+      <div class="question" id="question"></div>
+      <div id="options"></div>
+      <div class="actions">
+        <button class="secondary" onclick="goBack()">上一题</button>
+      </div>
+    </section>
+
+    <section id="result" class="panel hidden"></section>
+
+    <div class="footer">生成时间：2026-06-19 00:36</div>
+  </main>
+
+  <script>
+    const TEST = {"slug": "hard-or-change", "theme": "你该继续硬撑，还是换一种活法？", "eyebrow": "LIFE RESET CHECK", "title": "你该继续硬撑，还是换一种活法？", "subtitle": "30 道题，看清你现在是该坚持，还是该转向", "subtitle_lines": ["30 道题，看清你现在是该坚持，还是该转向", "不用纠结标准答案，凭第一感觉选就好。"], "price_hint": "娱乐测试，仅供自我探索参考，不构成心理或职业诊断。", "intro": "你有没有过这种感觉：每天都在往前走，却越来越不像自己。", "intro_paragraphs": ["你有没有过这种感觉：每天都在往前走，却越来越不像自己。", "你说服自己再坚持一下，可身体和情绪已经开始悄悄提醒你。", "这个测试会帮你分清：你是在真正深耕，还是在硬撑一段不适合的生活。"], "value_statement": "这个测试会从能量状态、方向适配、现实压力、转向勇气四个维度，帮你判断：你现在更适合继续撑住，还是换一种活法。", "dimensions": ["能量状态", "方向适配", "现实压力", "转向勇气"], "style": "neutral-pace", "share_line": "不是所有坚持都叫成长，有些只是太久没有听见自己。", "questions": [{"text": "你最近有没有觉得自己每天都在完成任务，却越来越不像自己？", "options": [{"text": "我会先撑住，确保现实不失控", "type": "A"}, {"text": "我想换个方式，重新找回主动权", "type": "B"}, {"text": "我需要先恢复状态，再做决定", "type": "C"}, {"text": "我会重新规划，做一个低风险尝试", "type": "D"}]}, {"text": "你现在坚持的事情，是因为真的想要，还是因为不敢停下来？", "options": [{"text": "我会先撑住，确保现实不失控", "type": "A"}, {"text": "我想换个方式，重新找回主动权", "type": "B"}, {"text": "我需要先恢复状态，再做决定", "type": "C"}, {"text": "我会重新规划，做一个低风险尝试", "type": "D"}]}, {"text": "如果明天可以重新选择一次生活方式，你最想先换掉什么？", "options": [{"text": "我会先撑住，确保现实不失控", "type": "A"}, {"text": "我想换个方式，重新找回主动权", "type": "B"}, {"text": "我需要先恢复状态，再做决定", "type": "C"}, {"text": "我会重新规划，做一个低风险尝试", "type": "D"}]}, {"text": "你是在为未来积累，还是只是在消耗当下的自己？", "options": [{"text": "我会先撑住，确保现实不失控", "type": "A"}, {"text": "我想换个方式，重新找回主动权", "type": "B"}, {"text": "我需要先恢复状态，再做决定", "type": "C"}, {"text": "我会重新规划，做一个低风险尝试", "type": "D"}]}, {"text": "你有没有一边说“再坚持一下”，一边越来越没力气？", "options": [{"text": "我会先撑住，确保现实不失控", "type": "A"}, {"text": "我想换个方式，重新找回主动权", "type": "B"}, {"text": "我需要先恢复状态，再做决定", "type": "C"}, {"text": "我会重新规划，做一个低风险尝试", "type": "D"}]}, {"text": "你最害怕的是放弃后后悔，还是继续下去也没有结果？", "options": [{"text": "我会先撑住，确保现实不失控", "type": "A"}, {"text": "我想换个方式，重新找回主动权", "type": "B"}, {"text": "我需要先恢复状态，再做决定", "type": "C"}, {"text": "我会重新规划，做一个低风险尝试", "type": "D"}]}, {"text": "你现在的努力，更多来自热爱，还是来自不甘心？", "options": [{"text": "我会先撑住，确保现实不失控", "type": "A"}, {"text": "我想换个方式，重新找回主动权", "type": "B"}, {"text": "我需要先恢复状态，再做决定", "type": "C"}, {"text": "我会重新规划，做一个低风险尝试", "type": "D"}]}, {"text": "你有没有发现，自己已经很久没有真正期待过什么？", "options": [{"text": "我会先撑住，确保现实不失控", "type": "A"}, {"text": "我想换个方式，重新找回主动权", "type": "B"}, {"text": "我需要先恢复状态，再做决定", "type": "C"}, {"text": "我会重新规划，做一个低风险尝试", "type": "D"}]}, {"text": "你是在坚持方向，还是在维护一个不想承认的选择？", "options": [{"text": "我会先撑住，确保现实不失控", "type": "A"}, {"text": "我想换个方式，重新找回主动权", "type": "B"}, {"text": "我需要先恢复状态，再做决定", "type": "C"}, {"text": "我会重新规划，做一个低风险尝试", "type": "D"}]}, {"text": "如果没有别人评价，你还会选择现在这条路吗？", "options": [{"text": "我会先撑住，确保现实不失控", "type": "A"}, {"text": "我想换个方式，重新找回主动权", "type": "B"}, {"text": "我需要先恢复状态，再做决定", "type": "C"}, {"text": "我会重新规划，做一个低风险尝试", "type": "D"}]}, {"text": "你现在最想逃离的，是工作本身，还是现在的生活节奏？", "options": [{"text": "我会先撑住，确保现实不失控", "type": "A"}, {"text": "我想换个方式，重新找回主动权", "type": "B"}, {"text": "我需要先恢复状态，再做决定", "type": "C"}, {"text": "我会重新规划，做一个低风险尝试", "type": "D"}]}, {"text": "你对未来的焦虑，是因为方向不清，还是因为能量不够？", "options": [{"text": "我会先撑住，确保现实不失控", "type": "A"}, {"text": "我想换个方式，重新找回主动权", "type": "B"}, {"text": "我需要先恢复状态，再做决定", "type": "C"}, {"text": "我会重新规划，做一个低风险尝试", "type": "D"}]}, {"text": "你有没有把“负责任”误以为“不能改变”？", "options": [{"text": "我会先撑住，确保现实不失控", "type": "A"}, {"text": "我想换个方式，重新找回主动权", "type": "B"}, {"text": "我需要先恢复状态，再做决定", "type": "C"}, {"text": "我会重新规划，做一个低风险尝试", "type": "D"}]}, {"text": "你现在的状态，更像是在成长，还是在硬扛？", "options": [{"text": "我会先撑住，确保现实不失控", "type": "A"}, {"text": "我想换个方式，重新找回主动权", "type": "B"}, {"text": "我需要先恢复状态，再做决定", "type": "C"}, {"text": "我会重新规划，做一个低风险尝试", "type": "D"}]}, {"text": "你最近的疲惫，是短期压力，还是长期不适配？", "options": [{"text": "我会先撑住，确保现实不失控", "type": "A"}, {"text": "我想换个方式，重新找回主动权", "type": "B"}, {"text": "我需要先恢复状态，再做决定", "type": "C"}, {"text": "我会重新规划，做一个低风险尝试", "type": "D"}]}, {"text": "你有没有因为害怕失败，而一直困在熟悉的消耗里？", "options": [{"text": "我会先撑住，确保现实不失控", "type": "A"}, {"text": "我想换个方式，重新找回主动权", "type": "B"}, {"text": "我需要先恢复状态，再做决定", "type": "C"}, {"text": "我会重新规划，做一个低风险尝试", "type": "D"}]}, {"text": "你最想拥有的是更多钱，更多自由，还是更多掌控感？", "options": [{"text": "我会先撑住，确保现实不失控", "type": "A"}, {"text": "我想换个方式，重新找回主动权", "type": "B"}, {"text": "我需要先恢复状态，再做决定", "type": "C"}, {"text": "我会重新规划，做一个低风险尝试", "type": "D"}]}, {"text": "如果继续这样一年，你会更接近想要的自己吗？", "options": [{"text": "我会先撑住，确保现实不失控", "type": "A"}, {"text": "我想换个方式，重新找回主动权", "type": "B"}, {"text": "我需要先恢复状态，再做决定", "type": "C"}, {"text": "我会重新规划，做一个低风险尝试", "type": "D"}]}, {"text": "你是在等一个机会，还是在等自己终于撑不住？", "options": [{"text": "我会先撑住，确保现实不失控", "type": "A"}, {"text": "我想换个方式，重新找回主动权", "type": "B"}, {"text": "我需要先恢复状态，再做决定", "type": "C"}, {"text": "我会重新规划，做一个低风险尝试", "type": "D"}]}, {"text": "你现在最需要的是休息、转向，还是重新规划？", "options": [{"text": "我会先撑住，确保现实不失控", "type": "A"}, {"text": "我想换个方式，重新找回主动权", "type": "B"}, {"text": "我需要先恢复状态，再做决定", "type": "C"}, {"text": "我会重新规划，做一个低风险尝试", "type": "D"}]}, {"text": "你有没有把别人的期待，当成自己的目标？", "options": [{"text": "我会先撑住，确保现实不失控", "type": "A"}, {"text": "我想换个方式，重新找回主动权", "type": "B"}, {"text": "我需要先恢复状态，再做决定", "type": "C"}, {"text": "我会重新规划，做一个低风险尝试", "type": "D"}]}, {"text": "你现在的坚持，有没有给你带来真实反馈？", "options": [{"text": "我会先撑住，确保现实不失控", "type": "A"}, {"text": "我想换个方式，重新找回主动权", "type": "B"}, {"text": "我需要先恢复状态，再做决定", "type": "C"}, {"text": "我会重新规划，做一个低风险尝试", "type": "D"}]}, {"text": "你害怕改变，是因为风险太大，还是因为没人支持？", "options": [{"text": "我会先撑住，确保现实不失控", "type": "A"}, {"text": "我想换个方式，重新找回主动权", "type": "B"}, {"text": "我需要先恢复状态，再做决定", "type": "C"}, {"text": "我会重新规划，做一个低风险尝试", "type": "D"}]}, {"text": "你现在的生活里，哪一部分最不像你自己？", "options": [{"text": "我会先撑住，确保现实不失控", "type": "A"}, {"text": "我想换个方式，重新找回主动权", "type": "B"}, {"text": "我需要先恢复状态，再做决定", "type": "C"}, {"text": "我会重新规划，做一个低风险尝试", "type": "D"}]}, {"text": "你是在努力变好，还是努力证明自己没有选错？", "options": [{"text": "我会先撑住，确保现实不失控", "type": "A"}, {"text": "我想换个方式，重新找回主动权", "type": "B"}, {"text": "我需要先恢复状态，再做决定", "type": "C"}, {"text": "我会重新规划，做一个低风险尝试", "type": "D"}]}, {"text": "你有没有感觉自己像被困在一个“还可以”的人生里？", "options": [{"text": "我会先撑住，确保现实不失控", "type": "A"}, {"text": "我想换个方式，重新找回主动权", "type": "B"}, {"text": "我需要先恢复状态，再做决定", "type": "C"}, {"text": "我会重新规划，做一个低风险尝试", "type": "D"}]}, {"text": "你最想保住的是什么，最想放下的又是什么？", "options": [{"text": "我会先撑住，确保现实不失控", "type": "A"}, {"text": "我想换个方式，重新找回主动权", "type": "B"}, {"text": "我需要先恢复状态，再做决定", "type": "C"}, {"text": "我会重新规划，做一个低风险尝试", "type": "D"}]}, {"text": "如果只能改变一个习惯，你会先改变什么？", "options": [{"text": "我会先撑住，确保现实不失控", "type": "A"}, {"text": "我想换个方式，重新找回主动权", "type": "B"}, {"text": "我需要先恢复状态，再做决定", "type": "C"}, {"text": "我会重新规划，做一个低风险尝试", "type": "D"}]}, {"text": "你是需要换工作，换圈子，还是换一种对自己的要求？", "options": [{"text": "我会先撑住，确保现实不失控", "type": "A"}, {"text": "我想换个方式，重新找回主动权", "type": "B"}, {"text": "我需要先恢复状态，再做决定", "type": "C"}, {"text": "我会重新规划，做一个低风险尝试", "type": "D"}]}, {"text": "做完这个测试，你最想知道自己该继续撑，还是该重新开始？", "options": [{"text": "我会先撑住，确保现实不失控", "type": "A"}, {"text": "我想换个方式，重新找回主动权", "type": "B"}, {"text": "我需要先恢复状态，再做决定", "type": "C"}, {"text": "我会重新规划，做一个低风险尝试", "type": "D"}]}], "results": {"A": {"name": "稳定硬撑型", "summary": "你很能扛，也很重视现实安全感。", "sections": ["你的优势是靠谱、负责、能坚持，但你也容易把“不能停”误认为“还适合”。接下来最重要的是确认：这份坚持有没有真实反馈。", "你可以把这个结果当成一个提醒：不是给自己贴标签，而是看清现在最值得调整的地方。", "接下来 7 天，选一个最小行动去验证它。真正有用的测试，不是让你立刻改变人生，而是让你更愿意靠近自己。"]}, "B": {"name": "转向重启型", "summary": "你内心已经开始渴望新的活法。", "sections": ["你不是冲动，而是已经感觉到旧节奏不再适配。适合先做低成本试错，给自己一个小入口，而不是立刻推翻全部生活。", "你可以把这个结果当成一个提醒：不是给自己贴标签，而是看清现在最值得调整的地方。", "接下来 7 天，选一个最小行动去验证它。真正有用的测试，不是让你立刻改变人生，而是让你更愿意靠近自己。"]}, "C": {"name": "能量修复型", "summary": "你现在最需要的不是答案，而是把状态补回来。", "sections": ["当人太累时，任何选择都会看起来很难。你适合先减少消耗，恢复一点掌控感，再判断要继续还是转向。", "你可以把这个结果当成一个提醒：不是给自己贴标签，而是看清现在最值得调整的地方。", "接下来 7 天，选一个最小行动去验证它。真正有用的测试，不是让你立刻改变人生，而是让你更愿意靠近自己。"]}, "D": {"name": "清醒规划型", "summary": "你适合用更聪明的方式调整人生节奏。", "sections": ["你并不想盲目放弃，也不想一直硬撑。你真正需要的是计划、边界和一个可验证的小行动。", "你可以把这个结果当成一个提醒：不是给自己贴标签，而是看清现在最值得调整的地方。", "接下来 7 天，选一个最小行动去验证它。真正有用的测试，不是让你立刻改变人生，而是让你更愿意靠近自己。"]}}};
+    let current = 0;
+    let answers = [];
+
+    function show(id) {
+      document.getElementById("start").classList.add("hidden");
+      document.getElementById("quiz").classList.add("hidden");
+      document.getElementById("result").classList.add("hidden");
+      document.getElementById(id).classList.remove("hidden");
+    }
+
+    function startTest() {
+      current = 0;
+      answers = [];
+      show("quiz");
+      renderQuestion();
+    }
+
+    function renderQuestion() {
+      const q = TEST.questions[current];
+      document.getElementById("count").textContent = `第 ${current + 1} / ${TEST.questions.length} 题`;
+      document.getElementById("bar").style.width = `${(current / TEST.questions.length) * 100}%`;
+      document.getElementById("question").textContent = q.text;
+      document.getElementById("options").innerHTML = q.options.map((opt, index) => `
+        <button class="option" onclick="chooseOption('${opt.type}')">${String.fromCharCode(65 + index)}. ${opt.text}</button>
+      `).join("");
+    }
+
+    function chooseOption(type) {
+      answers[current] = type;
+      if (current < TEST.questions.length - 1) {
+        current += 1;
+        renderQuestion();
+      } else {
+        showResult();
+      }
+    }
+
+    function goBack() {
+      if (current === 0) {
+        show("start");
+        return;
+      }
+      current -= 1;
+      renderQuestion();
+    }
+
+    function showResult() {
+      const scores = { A: 0, B: 0, C: 0, D: 0 };
+      answers.forEach(type => scores[type] += 1);
+      const winner = Object.keys(scores).sort((a, b) => scores[b] - scores[a])[0];
+      const result = TEST.results[winner];
+      document.getElementById("bar").style.width = "100%";
+      document.getElementById("result").innerHTML = `
+        <div class="question-count">你的测试结果</div>
+        <div class="result-title">${result.name}</div>
+        <div class="result-summary">${result.summary}</div>
+        ${result.sections.map(section => `<div class="result-section">${section}</div>`).join("")}
+        <div class="share">适合截图分享的一句话：不是所有坚持都叫成长，有些只是太久没有听见自己。</div>
+        <div class="actions">
+          <button class="primary" onclick="startTest()">重新测试</button>
+        </div>
+      `;
+      show("result");
+    }
+  </script>
+</body>
+</html>
