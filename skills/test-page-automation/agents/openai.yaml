@@ -1,0 +1,6 @@
+interface:
+  display_name: "测试页自动化"
+  short_description: "自动生成公众号测试页并检查发布流程"
+  default_prompt: "Use $test-page-automation to generate a viral Chinese H5 test page and prepare GitHub Pages publishing."
+policy:
+  allow_implicit_invocation: true
