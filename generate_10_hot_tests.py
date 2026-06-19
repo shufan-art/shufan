@@ -175,30 +175,142 @@ TEST_META = [
 
 OPTION_BANKS = {
     "life": [
-        ("我会先撑住，确保现实不失控", "A"),
-        ("我想换个方式，重新找回主动权", "B"),
-        ("我需要先恢复状态，再做决定", "C"),
-        ("我会重新规划，做一个低风险尝试", "D"),
+        ("现实压力和安全感", "A"),
+        ("自由感和新的可能性", "B"),
+        ("能量状态和情绪消耗", "C"),
+        ("方向规划和长期反馈", "D"),
     ],
     "love": [
-        ("我很容易被情绪和回应牵动", "A"),
-        ("我更在意稳定、确定和被放在心上", "B"),
-        ("我会先观察边界和长期适配", "C"),
-        ("我需要先确认自己舒服不舒服", "D"),
+        ("情绪波动和上头感", "A"),
+        ("稳定回应和安全感", "B"),
+        ("长期适配和边界感", "C"),
+        ("自我感受和真实需求", "D"),
     ],
     "sensitive": [
-        ("我最容易捕捉到情绪变化", "A"),
-        ("我对环境和细节特别敏感", "B"),
-        ("我很容易共情，也容易被影响", "C"),
-        ("我需要边界和独处来恢复自己", "D"),
+        ("别人的情绪和语气变化", "A"),
+        ("环境、声音、气味和细节", "B"),
+        ("关系里的共情和责任感", "C"),
+        ("独处、边界和自我恢复", "D"),
     ],
     "money": [
-        ("我适合靠表达、内容和影响力放大价值", "A"),
-        ("我适合靠服务、陪伴和解决具体问题变现", "B"),
-        ("我适合靠资源整合、信息差和链接机会赚钱", "C"),
-        ("我适合把技能、经验或审美做成产品", "D"),
+        ("表达、内容和个人影响力", "A"),
+        ("服务、陪伴和解决具体问题", "B"),
+        ("资源整合、信息差和链接机会", "C"),
+        ("技能产品化、模板和标准化交付", "D"),
     ],
 }
+
+
+FREQUENCY_OPTIONS = [
+    ("经常会，而且很容易影响我的状态", "A"),
+    ("偶尔会，但我通常能慢慢调整回来", "B"),
+    ("很少会，我更习惯先观察和判断", "C"),
+    ("说不清，要看对象、环境和当时状态", "D"),
+]
+
+
+CHOICE_OPTIONS = [
+    ("我更偏向前一种，这更像我现在的真实状态", "A"),
+    ("我更偏向后一种，那种感受对我影响更大", "B"),
+    ("两种都有，我经常在中间摇摆", "C"),
+    ("都不完全准确，我需要具体情况具体判断", "D"),
+]
+
+
+ACTION_OPTIONS = [
+    ("先稳住现实，不急着做大改变", "A"),
+    ("先做一个小尝试，看看有没有新可能", "B"),
+    ("先停下来恢复状态，别继续消耗自己", "C"),
+    ("先把问题拆清楚，再决定下一步", "D"),
+]
+
+
+LOVE_ACTION_OPTIONS = [
+    ("我会很在意，也容易开始反复想", "A"),
+    ("我会看对方有没有持续、稳定的行动", "B"),
+    ("我会先观察，不急着给关系下结论", "C"),
+    ("我会问自己舒服不舒服，先守住边界", "D"),
+]
+
+
+MONEY_ACTION_OPTIONS = [
+    ("先用内容表达，把自己的观点发出去", "A"),
+    ("先做小服务，验证别人是否愿意付费", "B"),
+    ("先找需求和资源，看哪里能撮合成交", "C"),
+    ("先整理成模板或产品，降低重复交付成本", "D"),
+]
+
+
+def compact_fragment(text):
+    text = re.sub(r"^[你我他她TAta是否会不会有没有能不能是不是]*", "", text)
+    text = text.strip(" ，,。？?！!、：:")
+    return text[:24] or "这种感受"
+
+
+def split_choice_question(line):
+    if "还是" not in line:
+        return None
+    left, right = line.split("还是", 1)
+    left = compact_fragment(left)
+    right = compact_fragment(right)
+    if len(left) < 2 or len(right) < 2:
+        return None
+    return [
+        (f"更偏向「{left}」", "A"),
+        (f"更偏向「{right}」", "B"),
+        ("两种都有，我会在不同阶段摇摆", "C"),
+        ("都不完全像我，我更看具体情境", "D"),
+    ]
+
+
+def is_frequency_question(line):
+    return any(word in line for word in ["会不会", "有没有", "是否", "能不能", "是不是", "会因为", "容易"])
+
+
+def is_action_question(line):
+    return any(word in line for word in ["怎么", "如何", "先", "开始", "处理", "选择", "改变", "做"])
+
+
+def build_options(line, category, index):
+    split_options = split_choice_question(line)
+    if split_options:
+        return split_options
+
+    if any(word in line for word in ["哪种", "哪个", "哪类", "什么", "哪里", "哪一"]):
+        base = OPTION_BANKS[category]
+        starters = [
+            "最像我的是",
+            "我最在意的是",
+            "最容易影响我的是",
+            "我最需要先看清的是",
+        ]
+        return [(f"{starters[(index + i) % len(starters)]}：{text}", option_type) for i, (text, option_type) in enumerate(base)]
+
+    fragment = compact_fragment(line)
+
+    if is_frequency_question(line):
+        return [
+            (f"经常会，尤其在「{fragment}」这类事情上很明显", "A"),
+            (f"偶尔会，但我能慢慢从「{fragment}」里调整回来", "B"),
+            (f"很少会，我面对「{fragment}」时通常比较清醒", "C"),
+            (f"说不清，要看「{fragment}」发生在什么情境里", "D"),
+        ]
+
+    if is_action_question(line):
+        if category == "love":
+            return [(f"{text}，再处理「{fragment}」", option_type) for text, option_type in LOVE_ACTION_OPTIONS]
+        if category == "money":
+            return [(f"{text}，先从「{fragment}」切入", option_type) for text, option_type in MONEY_ACTION_OPTIONS]
+        return [(f"{text}，再面对「{fragment}」", option_type) for text, option_type in ACTION_OPTIONS]
+
+    base = OPTION_BANKS[category]
+    tones = [
+        "非常符合",
+        "有一点符合",
+        "不太符合",
+        "暂时说不清",
+    ]
+    return [(f"{tone}：{text}", option_type) for tone, (text, option_type) in zip(tones, base)]
 
 
 RESULTS = {
@@ -245,13 +357,12 @@ def parse_sections():
 
 
 def build_questions(lines, category):
-    options = OPTION_BANKS[category]
     return [
         {
             "text": line,
-            "options": [{"text": text, "type": option_type} for text, option_type in options],
+            "options": [{"text": text, "type": option_type} for text, option_type in build_options(line, category, index)],
         }
-        for line in lines[:30]
+        for index, line in enumerate(lines[:30])
     ]
 
 
