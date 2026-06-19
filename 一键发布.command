@@ -13,7 +13,7 @@ fi
 
 git remote set-url origin "https://shufan-art@github.com/shufan-art/shufan.git"
 
-git add index.html .nojekyll tests generate_test.py publish_to_github_pages.py "网页上传版/index.html" "网页上传版/test_config.json" 2>/dev/null
+git add index.html .nojekyll tests site generate_test.py generate_10_hot_tests.py publish_to_github_pages.py "网页上传版/index.html" "网页上传版/test_config.json" "爆款标题测试题库10套.md" 2>/dev/null
 
 if git diff --cached --quiet; then
   echo "没有发现新的网页改动，准备直接推送当前版本。"
@@ -25,9 +25,9 @@ echo ""
 echo "正在上传到 GitHub..."
 echo ""
 
-git fetch origin main >/dev/null 2>&1 || true
+git fetch origin main
 
-if git push -u origin main --force-with-lease; then
+if git push -u origin main --force; then
   echo ""
   echo "发布成功！"
   echo "等 30 秒到 2 分钟后打开："
