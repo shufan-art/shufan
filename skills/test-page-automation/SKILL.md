@@ -1,6 +1,6 @@
 ---
 name: test-page-automation
-description: Create and maintain viral-style Chinese H5 personality/self-discovery test pages for WeChat/Xiaohongshu monetization funnels. Use when the user asks to generate tests from titles, expand topics into 30-question tests, fix repeated options, preserve old links, prepare GitHub Pages output, diagnose publishing failures, or automate the existing 通用测试壳 workflow.
+description: Create and maintain viral-style Chinese H5 personality/self-discovery/心理测试 pages for WeChat/Xiaohongshu monetization funnels. Use when the user says “心理测试”, asks to generate a psychological/personality test from a topic or title, expand topics into 30-question tests, fix repeated options, preserve old links, prepare GitHub Pages output, diagnose publishing failures, or automate the existing 通用测试壳 workflow.
 ---
 
 # Test Page Automation
@@ -8,6 +8,8 @@ description: Create and maintain viral-style Chinese H5 personality/self-discove
 ## Core Workflow
 
 Use this skill to run the user's existing `通用测试壳` system as a repeatable production line:
+
+Trigger this workflow whenever the user says “心理测试”, “生成心理测试”, “做一个心理测试”, or gives a title and asks for a test link.
 
 1. Understand the requested topic set: one title, multiple titles, or a markdown question bank.
 2. Generate each test as an independent page with a stable slug; never overwrite older tests unless the user explicitly asks.
