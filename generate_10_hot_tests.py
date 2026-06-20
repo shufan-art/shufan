@@ -467,11 +467,12 @@ def build_config(meta, question_lines):
     if meta.get("report_preview") == "career-decision":
         config["report_preview"] = {
             "enabled": True,
+            "demo_unlocked": True,
             "label": "你的专属决策报告",
             "kicker": "CAREER · REPORT",
             "unlock_title": "完整报告 · 解锁你的专属决策分析",
             "unlock_text": "完整报告将展开你的隐藏优势、主要卡点、适合的行动路径和未来 7 天调整建议。",
-            "button_text": "解锁完整报告 1.9 元",
+            "button_text": "查看完整报告演示版",
             "reports": CAREER_DECISION_REPORTS,
         }
         config["results"] = build_results(category)

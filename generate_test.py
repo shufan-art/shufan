@@ -823,6 +823,22 @@ def render_html(config):
       max-height: 220px;
       margin-top: 18px;
     }}
+    .full-report {{
+      border-radius: 10px;
+      border: 1px solid rgba(211, 174, 92, 0.2);
+      background: rgba(255, 255, 255, 0.045);
+      padding: 18px;
+      margin-top: 18px;
+    }}
+    .full-report-title {{
+      color: #d8b96f;
+      font-weight: 950;
+      font-size: 18px;
+      margin-bottom: 10px;
+    }}
+    .full-report .locked-item:first-of-type {{
+      border-top: 0;
+    }}
     .locked-content {{
       filter: blur(4px);
       opacity: 0.56;
@@ -1006,6 +1022,27 @@ def render_html(config):
       const topScore = scores[winner] || 0;
       const score = Math.min(96, (report.base_score || 78) + Math.max(0, topScore - 8));
       const locked = (report.locked || []).map(item => `<div class="locked-item">${{escapeText(item)}}</div>`).join("");
+      const fullReport = `
+        <div class="full-report">
+          <div class="full-report-title">完整报告演示版</div>
+          ${{locked}}
+          <div class="locked-item">专属提醒：不要急着证明自己能彻底改变，先做一个能带来真实反馈的小动作。你需要的不是更用力，而是把力气放到更值得的位置。</div>
+        </div>
+      `;
+      const lockedReport = `
+        <div class="locked-report">
+          <div class="locked-content">${{locked}}</div>
+          <div class="lock-overlay">
+            <div class="lock-icon">锁</div>
+            <div class="unlock-title">${{escapeText(preview.unlock_title || "完整报告 · 解锁查看")}}</div>
+            <div class="unlock-text">${{escapeText(preview.unlock_text || "解锁后查看完整分析和行动建议")}}</div>
+          </div>
+        </div>
+      `;
+      const reportBody = preview.demo_unlocked ? fullReport : lockedReport;
+      const primaryAction = preview.demo_unlocked
+        ? ""
+        : `<button class="report-button" onclick="unlockDemo('${{winner}}')">${{escapeText(preview.button_text || "解锁完整报告")}}</button>`;
       return `
         <div class="report-top">
           <span>${{escapeText(preview.label || "你的专属报告")}}</span>
@@ -1020,19 +1057,28 @@ def render_html(config):
           <div>${{escapeText(report.core || result.summary)}}</div>
         </div>
         <div class="gold-line">「${{escapeText(report.gold || TEST.share_line)}}」</div>
-        <div class="locked-report">
-          <div class="locked-content">${{locked}}</div>
-          <div class="lock-overlay">
-            <div class="lock-icon">锁</div>
-            <div class="unlock-title">${{escapeText(preview.unlock_title || "完整报告 · 解锁查看")}}</div>
-            <div class="unlock-text">${{escapeText(preview.unlock_text || "解锁后查看完整分析和行动建议")}}</div>
-          </div>
-        </div>
+        ${{reportBody}}
         <div class="report-actions">
-          <button class="report-button" onclick="alert('这里后续可以接 1.9 元付费链接或公众号回复关键词。')">${{escapeText(preview.button_text || "解锁完整报告")}}</button>
+          ${{primaryAction}}
           <button class="report-secondary" onclick="startTest()">重新测试</button>
         </div>
       `;
+    }}
+
+    function unlockDemo(winner) {{
+      const preview = TEST.report_preview;
+      const report = preview.reports[winner];
+      const full = (report.locked || []).map(item => `<div class="locked-item">${{escapeText(item)}}</div>`).join("");
+      document.querySelector(".locked-report").outerHTML = `
+        <div class="full-report">
+          <div class="full-report-title">完整报告已解锁</div>
+          ${{full}}
+          <div class="locked-item">专属提醒：不要急着证明自己能彻底改变，先做一个能带来真实反馈的小动作。你需要的不是更用力，而是把力气放到更值得的位置。</div>
+        </div>
+      `;
+      document.querySelector(".report-button").textContent = "已解锁完整报告";
+      document.querySelector(".report-button").disabled = true;
+      document.querySelector(".report-button").style.opacity = "0.72";
     }}
 
     function showResult() {{
