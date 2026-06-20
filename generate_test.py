@@ -741,20 +741,20 @@ def render_html(config):
       margin-top: 18px;
     }}
     .report-panel {{
-      background: #11151a;
-      color: #f7f3e8;
-      border-color: rgba(211, 174, 92, 0.24);
-      box-shadow: 0 24px 70px rgba(17, 21, 26, 0.28);
+      background: linear-gradient(180deg, rgba(255, 253, 247, 0.96), rgba(241, 246, 240, 0.94));
+      color: {colors["text"]};
+      border-color: {colors["panel_border"]};
+      box-shadow: 0 24px 70px rgba(65, 78, 68, 0.16);
     }}
     .report-top {{
       display: flex;
       justify-content: space-between;
       gap: 12px;
-      color: #d3ae5c;
+      color: {colors["primary"]};
       font-size: 13px;
       font-weight: 800;
       letter-spacing: 0.08em;
-      border-bottom: 1px solid rgba(211, 174, 92, 0.18);
+      border-bottom: 1px solid {colors["panel_border"]};
       padding-bottom: 16px;
       margin-bottom: 22px;
     }}
@@ -762,8 +762,8 @@ def render_html(config):
       display: inline-block;
       padding: 5px 14px;
       border-radius: 999px;
-      background: rgba(211, 174, 92, 0.14);
-      color: #d8b96f;
+      background: {colors["secondary"]};
+      color: {colors["secondary_text"]};
       font-size: 13px;
       font-weight: 800;
     }}
@@ -777,38 +777,38 @@ def render_html(config):
     }}
     .report-subtitle {{
       text-align: center;
-      color: #bfc4c7;
+      color: {colors["sub"]};
       font-size: 17px;
       margin-bottom: 18px;
     }}
     .report-score {{
       text-align: center;
-      color: #d8b96f;
+      color: {colors["primary"]};
       font-size: 36px;
       line-height: 1.1;
       font-weight: 950;
       margin: 18px 0;
     }}
     .report-score span {{
-      color: #bfc4c7;
+      color: {colors["notice"]};
       font-size: 15px;
       font-weight: 750;
       margin-left: 8px;
     }}
     .core-box {{
-      border: 1px solid rgba(211, 174, 92, 0.18);
-      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid {colors["panel_border"]};
+      background: rgba(255, 255, 255, 0.62);
       border-radius: 8px;
       padding: 18px;
       margin: 22px 0;
     }}
     .core-label {{
-      color: #d8b96f;
+      color: {colors["primary"]};
       font-weight: 850;
       margin-bottom: 8px;
     }}
     .gold-line {{
-      color: #d8b96f;
+      color: {colors["result"]};
       text-align: center;
       font-weight: 850;
       margin: 20px 0 18px;
@@ -817,21 +817,21 @@ def render_html(config):
       position: relative;
       overflow: hidden;
       border-radius: 10px;
-      border: 1px solid rgba(211, 174, 92, 0.16);
-      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid {colors["panel_border"]};
+      background: rgba(255, 255, 255, 0.46);
       padding: 18px;
       max-height: 220px;
       margin-top: 18px;
     }}
     .full-report {{
       border-radius: 10px;
-      border: 1px solid rgba(211, 174, 92, 0.2);
-      background: rgba(255, 255, 255, 0.045);
+      border: 1px solid {colors["panel_border"]};
+      background: rgba(255, 255, 255, 0.58);
       padding: 18px;
       margin-top: 18px;
     }}
     .full-report-title {{
-      color: #d8b96f;
+      color: {colors["primary"]};
       font-weight: 950;
       font-size: 18px;
       margin-bottom: 10px;
@@ -844,7 +844,7 @@ def render_html(config):
       opacity: 0.56;
     }}
     .locked-item {{
-      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      border-top: 1px solid {colors["panel_border"]};
       padding: 12px 0;
     }}
     .lock-overlay {{
@@ -852,14 +852,14 @@ def render_html(config):
       inset: auto 0 0;
       padding: 54px 18px 18px;
       text-align: center;
-      background: linear-gradient(180deg, rgba(17, 21, 26, 0) 0%, rgba(17, 21, 26, 0.94) 44%, #11151a 100%);
+      background: linear-gradient(180deg, rgba(255, 253, 247, 0) 0%, rgba(246, 248, 242, 0.94) 44%, #f6f8f2 100%);
     }}
     .lock-icon {{
       width: 36px;
       height: 36px;
       border-radius: 999px;
-      border: 1px solid rgba(211, 174, 92, 0.52);
-      color: #d8b96f;
+      border: 1px solid {colors["panel_border"]};
+      color: {colors["primary"]};
       display: inline-flex;
       align-items: center;
       justify-content: center;
@@ -867,12 +867,12 @@ def render_html(config):
       font-size: 20px;
     }}
     .unlock-title {{
-      color: #f7f3e8;
+      color: {colors["text"]};
       font-size: 18px;
       font-weight: 900;
     }}
     .unlock-text {{
-      color: #d8b96f;
+      color: {colors["primary"]};
       font-size: 13px;
       margin-top: 5px;
     }}
@@ -885,18 +885,18 @@ def render_html(config):
       border: 0;
       border-radius: 8px;
       padding: 16px;
-      background: #d8b96f;
-      color: #171717;
+      background: {colors["primary"]};
+      color: {colors.get("button_text", "white")};
       font-size: 18px;
       font-weight: 950;
       cursor: pointer;
     }}
     .report-secondary {{
-      border: 1px solid rgba(211, 174, 92, 0.28);
+      border: 1px solid {colors["panel_border"]};
       border-radius: 8px;
       padding: 14px;
       background: transparent;
-      color: #d8b96f;
+      color: {colors["primary"]};
       font-size: 15px;
       font-weight: 850;
       cursor: pointer;
