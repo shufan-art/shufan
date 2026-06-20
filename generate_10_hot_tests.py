@@ -25,6 +25,7 @@ TEST_META = [
         ],
         "value_statement": "这个测试会从能量状态、方向适配、现实压力、转向勇气四个维度，帮你判断：你现在更适合继续撑住，还是换一种活法。",
         "category": "life",
+        "report_preview": "career-decision",
     },
     {
         "slug": "be-controlled",
@@ -341,6 +342,66 @@ RESULTS = {
 }
 
 
+CAREER_DECISION_REPORTS = {
+    "A": {
+        "name": "稳定承压型",
+        "index_label": "稳定承压指数",
+        "base_score": 82,
+        "summary": "你不是没有野心，你只是更需要先确认脚下是稳的。",
+        "core": "你现在的疲惫，不是因为你不够努力，而是你一直在用“稳定”和“负责”保护自己。你真正需要的不是立刻推翻生活，而是找到一个不会把你耗空的升级入口。",
+        "gold": "你不是不想改变，你只是不能在没有安全感的时候冒险。",
+        "locked": [
+            "你的隐藏优势：你有很强的长期执行力，适合把一件事做深，而不是频繁换方向。",
+            "你的主要卡点：你太容易把稳定等同于安全，结果把真正想要的东西压到很后面。",
+            "适合你的下一步：先保留主线收入，同时开启一个低风险副线测试，不要用裸辞证明勇气。",
+            "未来 7 天建议：列出一个最小副线动作，比如发 1 条内容、整理 1 个服务、联系 1 个可能客户。",
+        ],
+    },
+    "B": {
+        "name": "向上突围型",
+        "index_label": "向上突围指数",
+        "base_score": 86,
+        "summary": "你不是想躺平，你只是选错了用力方向。",
+        "core": "你现在的疲惫，不是因为不想拼，而是因为你一直在用力，但没用在能让你往上走的地方。你需要的不是继续硬撑，而是换一个更能放大你能力的位置。",
+        "gold": "你不是想躺平，你只是走错了方向。",
+        "locked": [
+            "你的隐藏优势：你对机会很敏感，也有不甘心的力量，适合在变化里找到新入口。",
+            "你的主要卡点：你想得很多，但容易等到完全确定才开始，结果错过最适合试错的窗口。",
+            "适合你的下一步：不要一下子换人生，先做一个能验证市场反馈的小项目。",
+            "未来 7 天建议：选一个你最想尝试的方向，做出一个可以给别人看的最小作品。",
+        ],
+    },
+    "C": {
+        "name": "能量修复型",
+        "index_label": "能量透支指数",
+        "base_score": 79,
+        "summary": "你不是不行，你只是已经累到很难再判断。",
+        "core": "你现在最需要的不是继续逼自己做决定，而是先把能量补回来。人在透支状态下，看什么都像没有出路；等状态恢复一点，你会重新看见选择。",
+        "gold": "你不是没有方向，你只是太累了。",
+        "locked": [
+            "你的隐藏优势：你很会复盘，也能从经历里提炼方法，只是现在能量被消耗太多。",
+            "你的主要卡点：你容易把低能量误判成自己没有能力，于是越焦虑越难启动。",
+            "适合你的下一步：先停止一个持续消耗你的任务、关系或习惯。",
+            "未来 7 天建议：只做一件能恢复掌控感的小事，不追求翻盘，先把自己接回来。",
+        ],
+    },
+    "D": {
+        "name": "清醒重构型",
+        "index_label": "方向重构指数",
+        "base_score": 84,
+        "summary": "你不是要逃离现在，而是需要重新设计自己的路径。",
+        "core": "你已经意识到，单纯坚持或者彻底放弃都不是答案。你真正需要的是把旧目标拆开，重新组合成一个更适合当下能力、资源和节奏的方案。",
+        "gold": "你需要的不是推翻人生，而是重构路径。",
+        "locked": [
+            "你的隐藏优势：你有判断力，也有规划意识，适合用系统方法解决卡住的问题。",
+            "你的主要卡点：你容易想得太完整，导致行动启动得太慢。",
+            "适合你的下一步：把未来目标拆成三个层级：必须保住、可以尝试、暂时放下。",
+            "未来 7 天建议：写一张路径重构表，把精力从消耗项挪到真正有反馈的事情上。",
+        ],
+    },
+}
+
+
 def parse_sections():
     text = SOURCE.read_text(encoding="utf-8")
     sections = []
@@ -383,7 +444,7 @@ def build_results(category):
 
 def build_config(meta, question_lines):
     category = meta["category"]
-    return {
+    config = {
         "slug": meta["slug"],
         "theme": meta["title"],
         "eyebrow": meta["eyebrow"],
@@ -403,6 +464,22 @@ def build_config(meta, question_lines):
         "questions": build_questions(question_lines, category),
         "results": build_results(category),
     }
+    if meta.get("report_preview") == "career-decision":
+        config["report_preview"] = {
+            "enabled": True,
+            "label": "你的专属决策报告",
+            "kicker": "CAREER · REPORT",
+            "unlock_title": "完整报告 · 解锁你的专属决策分析",
+            "unlock_text": "完整报告将展开你的隐藏优势、主要卡点、适合的行动路径和未来 7 天调整建议。",
+            "button_text": "解锁完整报告 1.9 元",
+            "reports": CAREER_DECISION_REPORTS,
+        }
+        config["results"] = build_results(category)
+        for key, report in CAREER_DECISION_REPORTS.items():
+            config["results"][key]["name"] = report["name"]
+            config["results"][key]["summary"] = report["summary"]
+            config["results"][key]["sections"] = [report["core"]]
+    return config
 
 
 def normalize_title(title):

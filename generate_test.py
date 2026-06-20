@@ -740,6 +740,151 @@ def render_html(config):
       border-radius: 6px;
       margin-top: 18px;
     }}
+    .report-panel {{
+      background: #11151a;
+      color: #f7f3e8;
+      border-color: rgba(211, 174, 92, 0.24);
+      box-shadow: 0 24px 70px rgba(17, 21, 26, 0.28);
+    }}
+    .report-top {{
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      color: #d3ae5c;
+      font-size: 13px;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      border-bottom: 1px solid rgba(211, 174, 92, 0.18);
+      padding-bottom: 16px;
+      margin-bottom: 22px;
+    }}
+    .type-pill {{
+      display: inline-block;
+      padding: 5px 14px;
+      border-radius: 999px;
+      background: rgba(211, 174, 92, 0.14);
+      color: #d8b96f;
+      font-size: 13px;
+      font-weight: 800;
+    }}
+    .report-name {{
+      margin: 12px 0 4px;
+      font-size: clamp(34px, 8vw, 52px);
+      line-height: 1.15;
+      font-weight: 950;
+      letter-spacing: 0;
+      text-align: center;
+    }}
+    .report-subtitle {{
+      text-align: center;
+      color: #bfc4c7;
+      font-size: 17px;
+      margin-bottom: 18px;
+    }}
+    .report-score {{
+      text-align: center;
+      color: #d8b96f;
+      font-size: 36px;
+      line-height: 1.1;
+      font-weight: 950;
+      margin: 18px 0;
+    }}
+    .report-score span {{
+      color: #bfc4c7;
+      font-size: 15px;
+      font-weight: 750;
+      margin-left: 8px;
+    }}
+    .core-box {{
+      border: 1px solid rgba(211, 174, 92, 0.18);
+      background: rgba(255, 255, 255, 0.04);
+      border-radius: 8px;
+      padding: 18px;
+      margin: 22px 0;
+    }}
+    .core-label {{
+      color: #d8b96f;
+      font-weight: 850;
+      margin-bottom: 8px;
+    }}
+    .gold-line {{
+      color: #d8b96f;
+      text-align: center;
+      font-weight: 850;
+      margin: 20px 0 18px;
+    }}
+    .locked-report {{
+      position: relative;
+      overflow: hidden;
+      border-radius: 10px;
+      border: 1px solid rgba(211, 174, 92, 0.16);
+      background: rgba(255, 255, 255, 0.03);
+      padding: 18px;
+      max-height: 220px;
+      margin-top: 18px;
+    }}
+    .locked-content {{
+      filter: blur(4px);
+      opacity: 0.56;
+    }}
+    .locked-item {{
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      padding: 12px 0;
+    }}
+    .lock-overlay {{
+      position: absolute;
+      inset: auto 0 0;
+      padding: 54px 18px 18px;
+      text-align: center;
+      background: linear-gradient(180deg, rgba(17, 21, 26, 0) 0%, rgba(17, 21, 26, 0.94) 44%, #11151a 100%);
+    }}
+    .lock-icon {{
+      width: 36px;
+      height: 36px;
+      border-radius: 999px;
+      border: 1px solid rgba(211, 174, 92, 0.52);
+      color: #d8b96f;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 10px;
+      font-size: 20px;
+    }}
+    .unlock-title {{
+      color: #f7f3e8;
+      font-size: 18px;
+      font-weight: 900;
+    }}
+    .unlock-text {{
+      color: #d8b96f;
+      font-size: 13px;
+      margin-top: 5px;
+    }}
+    .report-actions {{
+      display: grid;
+      gap: 10px;
+      margin-top: 18px;
+    }}
+    .report-button {{
+      border: 0;
+      border-radius: 8px;
+      padding: 16px;
+      background: #d8b96f;
+      color: #171717;
+      font-size: 18px;
+      font-weight: 950;
+      cursor: pointer;
+    }}
+    .report-secondary {{
+      border: 1px solid rgba(211, 174, 92, 0.28);
+      border-radius: 8px;
+      padding: 14px;
+      background: transparent;
+      color: #d8b96f;
+      font-size: 15px;
+      font-weight: 850;
+      cursor: pointer;
+    }}
     .hidden {{ display: none; }}
     .footer {{
       text-align: center;
@@ -845,12 +990,64 @@ def render_html(config):
       renderQuestion();
     }}
 
+    function escapeText(value) {{
+      return String(value || "").replace(/[&<>"']/g, char => ({{
+        "&": "&amp;",
+        "<": "&lt;",
+        ">": "&gt;",
+        '"': "&quot;",
+        "'": "&#39;"
+      }}[char]));
+    }}
+
+    function renderReportPreview(result, winner, scores) {{
+      const preview = TEST.report_preview;
+      const report = preview.reports[winner];
+      const topScore = scores[winner] || 0;
+      const score = Math.min(96, (report.base_score || 78) + Math.max(0, topScore - 8));
+      const locked = (report.locked || []).map(item => `<div class="locked-item">${{escapeText(item)}}</div>`).join("");
+      return `
+        <div class="report-top">
+          <span>${{escapeText(preview.label || "你的专属报告")}}</span>
+          <span>${{escapeText(preview.kicker || "REPORT")}}</span>
+        </div>
+        <div style="text-align:center"><span class="type-pill">你的类型</span></div>
+        <div class="report-name">${{escapeText(report.name || result.name)}}</div>
+        <div class="report-subtitle">${{escapeText(report.summary || result.summary)}}</div>
+        <div class="report-score">${{score}}<span>${{escapeText(report.index_label || "专属指数")}}</span></div>
+        <div class="core-box">
+          <div class="core-label">核心结论</div>
+          <div>${{escapeText(report.core || result.summary)}}</div>
+        </div>
+        <div class="gold-line">「${{escapeText(report.gold || TEST.share_line)}}」</div>
+        <div class="locked-report">
+          <div class="locked-content">${{locked}}</div>
+          <div class="lock-overlay">
+            <div class="lock-icon">锁</div>
+            <div class="unlock-title">${{escapeText(preview.unlock_title || "完整报告 · 解锁查看")}}</div>
+            <div class="unlock-text">${{escapeText(preview.unlock_text || "解锁后查看完整分析和行动建议")}}</div>
+          </div>
+        </div>
+        <div class="report-actions">
+          <button class="report-button" onclick="alert('这里后续可以接 1.9 元付费链接或公众号回复关键词。')">${{escapeText(preview.button_text || "解锁完整报告")}}</button>
+          <button class="report-secondary" onclick="startTest()">重新测试</button>
+        </div>
+      `;
+    }}
+
     function showResult() {{
       const scores = {{ A: 0, B: 0, C: 0, D: 0 }};
       answers.forEach(type => scores[type] += 1);
       const winner = Object.keys(scores).sort((a, b) => scores[b] - scores[a])[0];
       const result = TEST.results[winner];
       document.getElementById("bar").style.width = "100%";
+      if (TEST.report_preview && TEST.report_preview.enabled) {{
+        document.getElementById("result").classList.add("report-panel");
+        document.getElementById("result").innerHTML = renderReportPreview(result, winner, scores);
+        show("result");
+        return;
+      }}
+      document.getElementById("result").classList.remove("report-panel");
       document.getElementById("result").innerHTML = `
         <div class="question-count">你的测试结果</div>
         <div class="result-title">${{result.name}}</div>
