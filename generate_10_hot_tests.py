@@ -42,6 +42,7 @@ TEST_META = [
         ],
         "value_statement": "这个测试会从情绪牵引、上头模式、边界感、安全感需求四个维度，帮你判断你最容易被哪类人拿捏。",
         "category": "love",
+        "report_preview": "auto",
     },
     {
         "slug": "sensitive-type",
@@ -74,6 +75,7 @@ TEST_META = [
         ],
         "value_statement": "这个测试会从心动浓度、陪伴需求、安全感、个人空间四个维度，帮你判断你真正适合的爱。",
         "category": "love",
+        "report_preview": "auto",
     },
     {
         "slug": "money-talent",
@@ -90,6 +92,7 @@ TEST_META = [
         ],
         "value_statement": "这个测试会从表达能力、服务能力、资源整合、产品化能力四个维度，帮你找到更适合自己的变现方向。",
         "category": "money",
+        "report_preview": "auto",
     },
     {
         "slug": "life-script",
@@ -106,6 +109,7 @@ TEST_META = [
         ],
         "value_statement": "这个测试会从选择模式、关系模式、成长路径、人生主线四个维度，帮你看懂自己的性格剧本。",
         "category": "life",
+        "report_preview": "auto",
     },
     {
         "slug": "wrong-person",
@@ -122,6 +126,7 @@ TEST_META = [
         ],
         "value_statement": "这个测试会从相处边界、沟通方式、情绪消耗、长期适配四个维度，帮你识别不适合你的关系类型。",
         "category": "love",
+        "report_preview": "auto",
     },
     {
         "slug": "strong-or-growth-love",
@@ -138,6 +143,7 @@ TEST_META = [
         ],
         "value_statement": "这个测试会从崇拜感、参与感、成长耐心、关系平衡四个维度，帮你判断适合你的恋爱模式。",
         "category": "love",
+        "report_preview": "auto",
     },
     {
         "slug": "like-signals",
@@ -154,6 +160,7 @@ TEST_META = [
         ],
         "value_statement": "这个测试会从语言表达、持续行动、稳定回应、关系诚意四个维度，帮你看懂真正喜欢的信号。",
         "category": "love",
+        "report_preview": "auto",
     },
     {
         "slug": "love-clarity",
@@ -170,6 +177,7 @@ TEST_META = [
         ],
         "value_statement": "这个测试会从边界感、判断力、自我价值、及时止损四个维度，帮你判断你的恋爱清醒度。",
         "category": "love",
+        "report_preview": "auto",
     },
 ]
 
@@ -402,6 +410,117 @@ CAREER_DECISION_REPORTS = {
 }
 
 
+REPORT_TEMPLATES = {
+    "life": {
+        "label": "你的专属自我探索报告",
+        "kicker": "SELF · REPORT",
+        "index": "人生路径指数",
+        "core_prefix": "你现在真正需要看清的，不是别人眼里的标准答案，而是这条路到底有没有让你更靠近自己。",
+        "locked": [
+            "你的隐藏优势：你有复盘和调整能力，只要看清主线，就能把经历变成下一步的判断力。",
+            "你的主要卡点：你容易把别人的期待当成自己的方向，于是越努力越不确定。",
+            "适合你的下一步：先把必须坚持、可以尝试、需要放下的事情分开，不要把所有压力混在一起。",
+            "未来 7 天建议：选一件能带来真实反馈的小事，先让生活重新产生一点掌控感。",
+        ],
+    },
+    "love": {
+        "label": "你的专属关系报告",
+        "kicker": "LOVE · REPORT",
+        "index": "关系清醒指数",
+        "core_prefix": "你在关系里最需要看清的，不是谁更主动，而是谁能让你在喜欢里也不弄丢自己。",
+        "locked": [
+            "你的隐藏需求：你真正想要的不是一时上头，而是被稳定看见、被认真回应。",
+            "你的关系卡点：你容易被某些瞬间打动，却忽略长期相处里最关键的边界和一致性。",
+            "适合你的相处模式：不要只看对方说了什么，要看他是否持续、稳定、尊重你的节奏。",
+            "未来 7 天建议：把注意力从猜对方转回观察自己，记录一次让你舒服和一次让你不安的细节。",
+        ],
+    },
+    "money": {
+        "label": "你的专属赚钱能力报告",
+        "kicker": "MONEY · REPORT",
+        "index": "变现潜力指数",
+        "core_prefix": "你不是没有赚钱能力，而是需要找到最适合自己性格、资源和表达方式的变现入口。",
+        "locked": [
+            "你的隐藏优势：你有可以被产品化或服务化的能力，只是过去可能把它当成普通经验。",
+            "你的赚钱卡点：你容易停在想法阶段，没有把能力变成别人能理解、能购买的小产品。",
+            "适合你的变现方式：先从一个低价、小交付、好验证的产品开始，不要一上来做太复杂。",
+            "未来 7 天建议：写出一个你能帮别人解决的小问题，并设计一个 1.9-9.9 元的最小交付。",
+        ],
+    },
+}
+
+
+REPORT_SLUG_OVERRIDES = {
+    "be-controlled": {
+        "index": "被拿捏风险指数",
+        "gold": "真正让你被拿捏的，往往是你太想被坚定选择。",
+        "core_prefix": "你要看清的不是对方有多会拿捏，而是你在哪个瞬间最容易把边界交出去。",
+    },
+    "hot-or-steady-love": {
+        "index": "亲密需求指数",
+        "gold": "有人适合点燃你，有人适合安放你。",
+        "core_prefix": "你真正需要的爱，不一定是最热烈的那种，而是能让你长期安心做自己的那种。",
+    },
+    "money-talent": {
+        "index": "赚钱潜力指数",
+        "gold": "你不是没有赚钱能力，只是还没把轻松的能力放到正确位置。",
+        "core_prefix": "你最值得放大的赚钱方式，通常藏在别人经常向你求助、而你做起来并不费力的地方。",
+    },
+    "life-script": {
+        "index": "人生剧本指数",
+        "gold": "你的性格不是限制，它只是一直在替你选择熟悉的剧情。",
+        "core_prefix": "你反复遇到的选择和关系，可能不是偶然，而是你的性格模式在悄悄推着剧情往前走。",
+    },
+    "wrong-person": {
+        "index": "关系适配风险指数",
+        "gold": "不合适的人，不是靠忍就能走长久。",
+        "core_prefix": "你需要识别的不是谁好谁坏，而是哪类相处方式会持续消耗你的安全感和自我感。",
+    },
+    "strong-or-growth-love": {
+        "index": "恋爱模式适配指数",
+        "gold": "强者恋爱和养成系恋爱没有高低，只有适不适合你。",
+        "core_prefix": "你在关系里真正需要的位置，决定了你适合被托举、并肩成长，还是慢慢参与彼此升级。",
+    },
+    "like-signals": {
+        "index": "喜欢信号识别指数",
+        "gold": "真正喜欢你的人，不会只给你上头，也会给你安心。",
+        "core_prefix": "你需要分清的是：对方是在制造暧昧情绪，还是在用稳定行动表达真正的喜欢。",
+    },
+    "love-clarity": {
+        "index": "恋爱清醒指数",
+        "gold": "恋爱清醒不是不心动，而是心动时也没有弄丢自己。",
+        "core_prefix": "你的清醒度，体现在喜欢一个人之后，还能不能看见自己的边界、需求和真实感受。",
+    },
+}
+
+
+def build_auto_report_preview(meta, results):
+    template = REPORT_TEMPLATES[meta["category"]]
+    override = REPORT_SLUG_OVERRIDES.get(meta["slug"], {})
+    reports = {}
+    score_map = {"A": 82, "B": 86, "C": 79, "D": 84}
+    for key, result in results.items():
+        reports[key] = {
+            "name": result["name"],
+            "index_label": override.get("index", template["index"]),
+            "base_score": score_map[key],
+            "summary": result["summary"],
+            "core": f"{override.get('core_prefix', template['core_prefix'])} {result['sections'][0]}",
+            "gold": override.get("gold", result["summary"]),
+            "locked": template["locked"],
+        }
+    return {
+        "enabled": True,
+        "demo_unlocked": True,
+        "label": template["label"],
+        "kicker": template["kicker"],
+        "unlock_title": "完整报告 · 查看你的专属分析",
+        "unlock_text": "完整报告将展开你的隐藏优势、主要卡点、适合路径和未来 7 天建议。",
+        "button_text": "查看完整报告演示版",
+        "reports": reports,
+    }
+
+
 def parse_sections():
     text = SOURCE.read_text(encoding="utf-8")
     sections = []
@@ -480,6 +599,8 @@ def build_config(meta, question_lines):
             config["results"][key]["name"] = report["name"]
             config["results"][key]["summary"] = report["summary"]
             config["results"][key]["sections"] = [report["core"]]
+    elif meta.get("report_preview") == "auto":
+        config["report_preview"] = build_auto_report_preview(meta, config["results"])
     return config
 
 

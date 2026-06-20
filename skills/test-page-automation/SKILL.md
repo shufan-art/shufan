@@ -18,9 +18,12 @@ Trigger this workflow whenever the user says “心理测试”, “生成心理
    - “A 还是 B” questions should offer the two sides plus mixed/unclear choices.
    - “会不会/有没有/能不能/是否” questions should offer frequency/state choices tied to that question.
    - “哪种/什么/哪里/哪类” questions should offer four theme-relevant directions.
-5. Run the publishing preparation step, copy `site/` to the repo root, and validate local files.
-6. Commit local changes. Only push to GitHub when network and credentials allow it.
-7. If publishing fails, diagnose credentials, network, permission, or branch divergence before changing page content.
+5. Use the latest result-page format by default: a themed “专属报告” page with index score, core conclusion, screenshot-friendly quote, and full report demo shown directly without requiring payment.
+6. Match report-page colors to the test theme. Romance/emotion tests use soft pink/cream; career/money/life tests use cream, gray-green, and restrained neutral tones.
+7. Keep paid-report logic available conceptually, but do not force payment in demo pages unless the user explicitly asks to add a payment or lock step.
+8. Run the publishing preparation step, copy `site/` to the repo root, and validate local files.
+9. Commit local changes. Only push to GitHub when network and credentials allow it.
+10. If publishing fails, diagnose credentials, network, permission, or branch divergence before changing page content.
 
 ## Project Defaults
 
@@ -42,6 +45,8 @@ Preferred style:
 
 - Female-facing emotional tests: soft pink/cream, rounded cards, gentle copy, no black-white grid.
 - Career/money/life direction tests: neutral cream, gray-green, restrained cards.
+- Result pages should use the same theme colors as the test intro and question pages.
+- The default result page should be “完整报告演示版”, not a hidden paid lock.
 - Avoid dark grid-heavy reference visuals unless the user explicitly asks.
 
 Read `references/xiong-test-pages.md` when you need the detailed content, visual, and publishing rules.
